@@ -1,0 +1,8 @@
+﻿  IndividualTask4-Cstrings.cpp
+C:\Users\druzhelubnyy\Desktop\GitRepos\1st-year-assignments\CPP\individuals\IndividualTask4-Cstrings\IndividualTask4-Cstrings\IndividualTask4-Cstrings.cpp(79,29): warning C4101: _: неиспользованная локальная переменная
+C:\Users\druzhelubnyy\Desktop\GitRepos\1st-year-assignments\CPP\individuals\IndividualTask4-Cstrings\IndividualTask4-Cstrings\IndividualTask4-Cstrings.cpp(91,28): warning C4101: _: неиспользованная локальная переменная
+  Создание кода
+  Previous IPDB not found, fall back to full compilation.
+  All 156 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  IndividualTask4-Cstrings.vcxproj -> C:\Users\druzhelubnyy\Desktop\GitRepos\1st-year-assignments\CPP\individuals\IndividualTask4-Cstrings\Release\IndividualTask4-Cstrings.exe
