@@ -6,7 +6,8 @@ class CalcTestSuite : public CxxTest::TestSuite {
 public:
 	void testAddition(void)
 	{
-		Calc obj;
-		TS_ASSERT(obj.add(1, 3), 2);
+		Calc calculator;
+		TS_ASSERT_EQUALS(calculator.add(1,2), 3);
+		TS_ASSERT_EQUALS(4, 4);
 	}
 };
