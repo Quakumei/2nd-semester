@@ -1,20 +1,17 @@
-test_containers: out/test_containers_dumb.exe
+main: out/main.exe
+test-containers: out/test-containers.exe
 
-
-out/test_containers_dumb.exe: test/test_containers.cpp
+out/main.exe: src/main.cpp
 	g++ $^ -o $@
 
-out/test_containers.exe: out/test_containers.o out/containers.a
-	g++ $^ -o $@ 
+out/test-containers.exe: test/test-containers.cpp src/Stack.hpp
+	g++ $< -o $@
 
-out/test_containers.o: test/test_containers.cpp
-	g++ -c $< -o $@
+# out/main.o: src/main.cpp
+# 	g++ -c $< -o $@
 
-out/containers.a: out/stack.o
-	ar rcs $@ $^
-
-out/stack.o: src/Stack.cpp
-	g++ -c $< -o $@
-
+# out/stack.o: src/Stack.hpp
+# 	g++ -c $< -o $@
+	
 clean:
 	rm -rf out/*.o
