@@ -185,7 +185,7 @@ std::string Queue<T>::print() const
     node_t* temp = head_;
     while (temp){
         // Не используем sstream, чтобы не задействовать лишние библиотеки. А стринг его не импротит?
-        res.append(temp->data);
+        res.append(std::to_string(temp->data));
         res.append(" ");
         temp = temp->next;
     }
