@@ -26,9 +26,21 @@ int main(int argc, char* argv[])
     std::string line;
     Stack<int> results;
     
+    // Stack<int> faulty;
+    // int i = 0;
     while (std::getline(*is, line, '\n')){
-        ExpressionCalculator ec(line);
-        results.push(ec.solve());
+        
+        if(line!=""){
+            try{
+                ExpressionCalculator ec(line);
+                results.push(ec.solve());
+            } catch (std::logic_error) {
+                std::cerr << "Bad expression!";
+                return -1;
+                // faulty.push(i);
+            }
+        }
+        // i++;     
     }
     if (!results.isEmpty()){
         int res = results.drop();
