@@ -1,7 +1,7 @@
-#include <iostream>
-
 #ifndef STACK_H
 #define STACK_H
+#include <iostream>
+#include <string>
 
 // Стек - структура данных, работающая по принципу LIFO (Last In, First Out),
 // т.е. элементы извлекаются из стека в порядке, обратном порядку их добавления.
@@ -18,10 +18,13 @@ public:
     // в C++11 желательно также определить конструктор перемещения и оператор перемещающего присваивания
     ~Stack();
 
-    void push(int);	// добавление элемента в стек
-    int pop();		// извлечение элемента из стека
+    void push(T);	// добавление элемента в стек
+    T drop();		// извлечение элемента из стека
 
     void print(std::ostream &) const;
+    std::string print() const;
+
+    bool isEmpty() const;
 
 private:
     // структура, описывающая элемент стека
@@ -40,6 +43,11 @@ private:
     Stack<T> & operator=(const Stack<T> &) = delete;
     Stack<T> & operator=(Stack<T> &&) = delete;
 };
+
+template <class T>
+bool Stack<T>::isEmpty() const{
+    return !head_;
+}
 
 // конструктор
 template <class T>
@@ -62,7 +70,7 @@ template <class T> Stack<T>::~Stack()
 
 // метод, помещающий значение в стек
 template <class T>
-void Stack<T>::push(int val)
+void Stack<T>::push(T val)
 {
     node_t *newNode = new node_t;
     newNode->data = val;
@@ -73,13 +81,13 @@ void Stack<T>::push(int val)
 // метод, извлекающий значение из стека;
 // извлекаемое значение возвращается функцией, элемент при этом удаляется из стека
 template <class T>
-int Stack<T>::pop()
+T Stack<T>::drop()
 {
     if (!head_)
     {
         throw std::logic_error("Stack is empty");
     }
-    int res = head_->data;
+    T res = head_->data;
     node_t *temp = head_;
     head_ = head_->next;
     delete temp;
@@ -91,10 +99,28 @@ template <class T>
 void Stack<T>::print(std::ostream &stream) const
 {
     node_t *temp = head_;
+    stream << "[ ";
     while (temp)
     {
         stream << temp->data << "  ";
         temp = temp->next;
     }
+    stream << "]";
+}
+
+//Возвращение строчного представления (для логов в тестах Catch2)
+template <class T>
+std::string Stack<T>::print() const
+{
+    std::string res = "[ ";
+    node_t* temp = head_;
+    while (temp){
+        // Не используем sstream, чтобы не задействовать лишние библиотеки.
+        res.append(std::to_string(temp->data));
+        res.append(" ");
+        temp = temp->next;
+    }
+    res.append("]");
+    return res;
 }
 #endif
