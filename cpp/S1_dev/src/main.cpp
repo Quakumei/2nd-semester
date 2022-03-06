@@ -7,48 +7,75 @@
 
 int main(int argc, char* argv[])
 {
-    //Вся мощь наследования и полиморфизма в действии!
+    bool memoryAllocated = false;
     std::istream * is;
     switch (argc){
         case 2:
         {
             std::string filename = argv[1];
             is = new std::ifstream(filename);
+            memoryAllocated = true;
+
+            if (is->peek() == EOF && is->eof()){
+                std::cout << '\n';
+                delete is;
+                memoryAllocated = false;
+                return 0;
+            }
             break;
         }
         case 1:
-            is = &std::cin; 
+            is = &std::cin;
             break;
-        default: 
+        default:
             throw std::logic_error("Filename should be specified as an only argument");
     }
-    
+
     std::string line;
-    Stack<int> results;
-    
-    // Stack<int> faulty;
-    // int i = 0;
-    while (std::getline(*is, line, '\n')){
-        
-        if(line!=""){
+    Stack<long long> results;
+
+    while (true){
+        if (is->peek() == EOF && is->eof()){
+            //std::clog << "\n!!EOF DETECTED!!\n";
+            break;
+        }
+        std::getline(*is, line);
+
+        if (line!=""){
             try{
+                //std::clog << "\n==========\nGET:" << line << "\n";
                 ExpressionCalculator ec(line);
                 results.push(ec.solve());
-            } catch (std::logic_error) {
-                std::cerr << "Bad expression!";
+                //std::clog << "PROCESSED:" << line << "\n==========\n";
+
+            } catch (std::logic_error const& e) {
+                std::cerr << "Bad expression! ( " << e.what() << ")\n";
+                if (memoryAllocated){
+                    delete is;
+                }
                 return -1;
                 // faulty.push(i);
+            } catch (std::overflow_error const& e ){
+                std::cerr << "Calculation error! ( " << e.what() << ")\n";
+                if (memoryAllocated){
+                    delete is;
+                }
+                return -2;
             }
         }
-        // i++;     
+        // i++;
     }
     if (!results.isEmpty()){
-        int res = results.drop();
-        std::cout << res << ' ';
+        long long res = results.drop();
+        std::cout << res;
         for ( ;!results.isEmpty();){
             res = results.drop();
-            std::cout << res << ' ';
+            std::cout << ' ' << res;
         }
+        std::cout << '\n';
+    }
+    if (memoryAllocated){
+        delete is;
     }
     return 0;
 }

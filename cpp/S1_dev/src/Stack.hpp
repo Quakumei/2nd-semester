@@ -3,72 +3,68 @@
 #include <iostream>
 #include <string>
 
-// Стек - структура данных, работающая по принципу LIFO (Last In, First Out),
-// т.е. элементы извлекаются из стека в порядке, обратном порядку их добавления.
-// Ниже реализован стек целых чисел на базе связного списка
-template<class T>
+
+template <class T>
 class Stack
 {
 public:
     Stack();
 
-    // деструктор освобождает память, выделенную под список (вызывается неявно при уничтожении объекта);
-    // кода объект содержит в себе какой-либо внешний ресурс (например, динамически выделенную память),
-    // необходимо(!) реализовать (или запретить) конструктор копирования, оператор присвивания и деструктор,
-    // в C++11 желательно также определить конструктор перемещения и оператор перемещающего присваивания
+
     ~Stack();
 
-    void push(T);	// добавление элемента в стек
-    T drop();		// извлечение элемента из стека
+    void push(T);
+    T drop();
 
     void print(std::ostream &) const;
     std::string print() const;
-
+    T peek() const;
     bool isEmpty() const;
 
 private:
-    // структура, описывающая элемент стека
+
     struct node_t
     {
-        T data;		// данные
-        node_t *next;	// указатель на следующий элемент
+        T data;
+        node_t *next;
     };
 
-    // указатель на вершину стека
+
     node_t *head_;
 
-    // для упрощения примера копирование и перемещение объектов запрещены
+
     Stack<T>(const Stack<T> &) = delete;
     Stack<T>(Stack<T> &&) = delete;
-    Stack<T> & operator=(const Stack<T> &) = delete;
-    Stack<T> & operator=(Stack<T> &&) = delete;
+    Stack<T> &operator=(const Stack<T> &) = delete;
+    Stack<T> &operator=(Stack<T> &&) = delete;
 };
 
 template <class T>
-bool Stack<T>::isEmpty() const{
+bool Stack<T>::isEmpty() const
+{
     return !head_;
 }
 
-// конструктор
-template <class T>
-Stack<T>::Stack() :
-    head_(nullptr)	// nullptr - пустой указатель (не указывает ни на какой адрес)
-                    // устаревший аналог - NULL
-{}
 
-// деструктор
-template <class T> Stack<T>::~Stack()
+template <class T>
+Stack<T>::Stack() : head_(nullptr)
 {
-    while (head_)	// то же, что while (head_ != nullptr)
+}
+
+
+template <class T>
+Stack<T>::~Stack()
+{
+    while (head_)
     {
         node_t *temp = head_;
         head_ = head_->next;
-        // обязательно освобождаем память, выделенную под каждый элемент
+
         delete temp;
     }
 }
 
-// метод, помещающий значение в стек
+
 template <class T>
 void Stack<T>::push(T val)
 {
@@ -78,8 +74,8 @@ void Stack<T>::push(T val)
     head_ = newNode;
 }
 
-// метод, извлекающий значение из стека;
-// извлекаемое значение возвращается функцией, элемент при этом удаляется из стека
+
+
 template <class T>
 T Stack<T>::drop()
 {
@@ -94,7 +90,7 @@ T Stack<T>::drop()
     return res;
 }
 
-// вывод всего стека на экран
+
 template <class T>
 void Stack<T>::print(std::ostream &stream) const
 {
@@ -108,19 +104,25 @@ void Stack<T>::print(std::ostream &stream) const
     stream << "]";
 }
 
-//Возвращение строчного представления (для логов в тестах Catch2)
+
 template <class T>
 std::string Stack<T>::print() const
 {
     std::string res = "[ ";
-    node_t* temp = head_;
-    while (temp){
-        // Не используем sstream, чтобы не задействовать лишние библиотеки.
-        res.append(std::to_string(temp->data));
+    node_t *temp = head_;
+    while (temp)
+    {
+        res.append("" + temp->data);
         res.append(" ");
         temp = temp->next;
     }
     res.append("]");
     return res;
+}
+
+template <class T>
+T Stack<T>::peek() const
+{
+    return head_->data;
 }
 #endif

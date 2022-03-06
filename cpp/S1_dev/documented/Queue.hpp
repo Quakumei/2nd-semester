@@ -9,32 +9,31 @@ class Queue
 {
 public:
     Queue();
-    Queue(const Queue &);
-    Queue(Queue &&) noexcept;
+    Queue(const Queue &);                 // конструктор копирования
+    Queue(Queue &&) noexcept;             // конструктор перемещения
     ~Queue();
-    Queue & operator=(const Queue &);
-    Queue & operator=(Queue &&) noexcept;
+    Queue & operator=(const Queue &);     // перегруженный оператор присваивания
+    Queue & operator=(Queue &&) noexcept; // перегруженный оператор перемещающего присваивания
 
     void swap(Queue &) noexcept;
 
-    void push(T);
-    T drop();
+    void push(T);                         // добавить элемент в очередь
+    T drop();                             // получить элемент из очереди
 
     void print(std::ostream &) const;
     std::string print() const;
 
     bool isEmpty() const;
-    T peek() const;
 
 private:
-    struct node_t
+    struct node_t         // элемент очереди
     {
-        T data;
-        node_t *next;
+        T data;           // данные
+        node_t *next;     // указатель на следующий элемент
     };
 
-    node_t *head_;
-    node_t *tail_;
+    node_t *head_;        // указатель на начало очереди
+    node_t *tail_;        // указатель на конец очереди
 };
 
 template <class T>
@@ -62,8 +61,8 @@ Queue<T>::Queue(const Queue<T> &queue) :
     head_(nullptr),
     tail_(nullptr)
 {
-
-
+    // собираем копию очереди внутри временного объекта, чтобы не допустить утечки памяти
+    // в случае возникновения исключения при выделени памяти под очередной элемент
     Queue<T> temp;
     node_t *src = queue.head_;
     while (src)
@@ -74,7 +73,7 @@ Queue<T>::Queue(const Queue<T> &queue) :
     swap(temp);
 }
 
-
+// конструктор перемещения
 template <class T>
 Queue<T>::Queue(Queue<T> &&queue) noexcept :
     head_(nullptr),
@@ -83,7 +82,7 @@ Queue<T>::Queue(Queue<T> &&queue) noexcept :
     swap(queue);
 }
 
-
+// деструктор
 template <class T>
 Queue<T>::~Queue()
 {
@@ -95,25 +94,30 @@ Queue<T>::~Queue()
     }
 }
 
-
+// оператор копирующего присваивания
 template <class T>
 Queue<T> & Queue<T>::operator=(const Queue<T> &queue)
 {
-
+    // если присваиваем объект самому себе, то делать ничего не нужно
     if (this == &queue)
     {
         return *this;
     }
-
+    // создаём копию присваиваемой очереди
     Queue<T> tempQueue(queue);
-
+    // меняем содержимое временной копии и контекстного объекта
     swap(tempQueue);
-
+    // возвращаем ссылку на контекстный объект
     return *this;
 
+    /*
+     временный объект tempQueue будет уничтожен при завершении метода
+     и его деструктор освободит память, занятую элементами изначальной очереди;
+     такой приём написания оператора присваивания называется copy-and-swap
+    */
 }
 
-
+// оператор перемещающего присваивания
 template <class T>
 Queue<T> & Queue<T>::operator=(Queue<T> &&queue) noexcept
 {
@@ -121,7 +125,7 @@ Queue<T> & Queue<T>::operator=(Queue<T> &&queue) noexcept
     return *this;
 }
 
-
+// обмен значениями аргумента и контекстного объекта (просто меняем указатели)
 template <class T>
 void Queue<T>::swap(Queue<T> &queue) noexcept
 {
@@ -129,7 +133,7 @@ void Queue<T>::swap(Queue<T> &queue) noexcept
     std::swap(tail_, queue.tail_);
 }
 
-
+// добавление элемента в очередь
 template <class T>
 void Queue<T>::push(T d)
 {
@@ -146,7 +150,7 @@ void Queue<T>::push(T d)
     tail_->next = nullptr;
 }
 
-
+// извлечение элемента из очереди
 template <class T>
 T Queue<T>::drop()
 {
@@ -168,7 +172,7 @@ T Queue<T>::drop()
     return res;
 }
 
-
+// вывод очереди на экран
 template <class T>
 void Queue<T>::print(std::ostream & stream) const
 {
@@ -180,25 +184,20 @@ void Queue<T>::print(std::ostream & stream) const
     }
 }
 
-
+//Возвращение строчного представления (для логов в тестах Catch2)
 template <class T>
 std::string Queue<T>::print() const
 {
     std::string res = "[ ";
     node_t* temp = head_;
     while (temp){
-        res.append("" + temp->data);
+
+        res.append(std::to_string(temp->data));
         res.append(" ");
         temp = temp->next;
     }
     res.append("]");
     return res;
-}
-
-template <class T>
-T Queue<T>::peek() const
-{
-    return head_->data;
 }
 
 #endif
