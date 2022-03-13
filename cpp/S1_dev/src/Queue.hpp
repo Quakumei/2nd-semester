@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 
-
 template <class T>
 class Queue
 {
@@ -12,8 +11,8 @@ public:
     Queue(const Queue &);
     Queue(Queue &&) noexcept;
     ~Queue();
-    Queue & operator=(const Queue &);
-    Queue & operator=(Queue &&) noexcept;
+    Queue &operator=(const Queue &);
+    Queue &operator=(Queue &&) noexcept;
 
     void swap(Queue &) noexcept;
 
@@ -38,13 +37,14 @@ private:
 };
 
 template <class T>
-Queue<T>::Queue() :
-    head_(nullptr),
-    tail_(nullptr)
-{}
+Queue<T>::Queue() : head_(nullptr),
+                    tail_(nullptr)
+{
+}
 
 template <class T>
-bool Queue<T>::isEmpty() const{
+bool Queue<T>::isEmpty() const
+{
     return !head_;
 }
 
@@ -58,11 +58,9 @@ bool Queue<T>::isEmpty() const{
  перемещения и оператор перемещающего присваивания
 */
 template <class T>
-Queue<T>::Queue(const Queue<T> &queue) :
-    head_(nullptr),
-    tail_(nullptr)
+Queue<T>::Queue(const Queue<T> &queue) : head_(nullptr),
+                                         tail_(nullptr)
 {
-
 
     Queue<T> temp;
     node_t *src = queue.head_;
@@ -74,15 +72,12 @@ Queue<T>::Queue(const Queue<T> &queue) :
     swap(temp);
 }
 
-
 template <class T>
-Queue<T>::Queue(Queue<T> &&queue) noexcept :
-    head_(nullptr),
-    tail_(nullptr)
+Queue<T>::Queue(Queue<T> &&queue) noexcept : head_(nullptr),
+                                             tail_(nullptr)
 {
     swap(queue);
 }
-
 
 template <class T>
 Queue<T>::~Queue()
@@ -95,9 +90,8 @@ Queue<T>::~Queue()
     }
 }
 
-
 template <class T>
-Queue<T> & Queue<T>::operator=(const Queue<T> &queue)
+Queue<T> &Queue<T>::operator=(const Queue<T> &queue)
 {
 
     if (this == &queue)
@@ -110,17 +104,14 @@ Queue<T> & Queue<T>::operator=(const Queue<T> &queue)
     swap(tempQueue);
 
     return *this;
-
 }
 
-
 template <class T>
-Queue<T> & Queue<T>::operator=(Queue<T> &&queue) noexcept
+Queue<T> &Queue<T>::operator=(Queue<T> &&queue) noexcept
 {
     swap(queue);
     return *this;
 }
-
 
 template <class T>
 void Queue<T>::swap(Queue<T> &queue) noexcept
@@ -128,7 +119,6 @@ void Queue<T>::swap(Queue<T> &queue) noexcept
     std::swap(head_, queue.head_);
     std::swap(tail_, queue.tail_);
 }
-
 
 template <class T>
 void Queue<T>::push(T d)
@@ -145,7 +135,6 @@ void Queue<T>::push(T d)
     tail_->data = d;
     tail_->next = nullptr;
 }
-
 
 template <class T>
 T Queue<T>::drop()
@@ -168,11 +157,10 @@ T Queue<T>::drop()
     return res;
 }
 
-
 template <class T>
-void Queue<T>::print(std::ostream & stream) const
+void Queue<T>::print(std::ostream &stream) const
 {
-    node_t* temp = head_;
+    node_t *temp = head_;
     while (temp)
     {
         std::cout << temp->data << " ";
@@ -180,13 +168,13 @@ void Queue<T>::print(std::ostream & stream) const
     }
 }
 
-
 template <class T>
 std::string Queue<T>::print() const
 {
     std::string res = "[ ";
-    node_t* temp = head_;
-    while (temp){
+    node_t *temp = head_;
+    while (temp)
+    {
         res.append("" + temp->data);
         res.append(" ");
         temp = temp->next;
