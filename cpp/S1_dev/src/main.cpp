@@ -1,80 +1,84 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
 #include "Stack.hpp"
 #include "ExpressionCalculator.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     bool memoryAllocated = false;
-    std::istream * is;
-    switch (argc){
-        case 2:
-        {
-            std::string filename = argv[1];
-            is = new std::ifstream(filename);
-            memoryAllocated = true;
+    std::istream *is;
+    switch (argc)
+    {
+    case 2:
+    {
+        std::string filename = argv[1];
+        is = new std::ifstream(filename);
+        memoryAllocated = true;
 
-            if (is->peek() == EOF && is->eof()){
-                std::cout << '\n';
-                delete is;
-                memoryAllocated = false;
-                return 0;
-            }
-            break;
+        if (is->peek() == EOF && is->eof())
+        {
+            std::cout << '\n';
+            delete is;
+            memoryAllocated = false;
+            return 0;
         }
-        case 1:
-            is = &std::cin;
-            break;
-        default:
-            throw std::logic_error("Filename should be specified as an only argument");
+        break;
+    }
+    case 1:
+        is = &std::cin;
+        break;
+    default:
+        throw std::logic_error("Filename should be specified as an only argument");
     }
 
     std::string line;
     Stack<long long> results;
 
-    while (true){
-        if (is->peek() == EOF && is->eof()){
-            //std::clog << "\n!!EOF DETECTED!!\n";
-            break;
-        }
+    while (!(is->peek() == EOF || is->eof()))
+    {
         std::getline(*is, line);
 
-        if (line!=""){
-            try{
-                //std::clog << "\n==========\nGET:" << line << "\n";
+        if (!line.empty())
+        {
+            try
+            {
                 ExpressionCalculator ec(line);
                 results.push(ec.solve());
-                //std::clog << "PROCESSED:" << line << "\n==========\n";
-
-            } catch (std::logic_error const& e) {
+            }
+            catch (std::logic_error const &e)
+            {
                 std::cerr << "Bad expression! ( " << e.what() << ")\n";
-                if (memoryAllocated){
+                if (memoryAllocated)
+                {
                     delete is;
                 }
                 return -1;
-                // faulty.push(i);
-            } catch (std::overflow_error const& e ){
+            }
+            catch (std::overflow_error const &e)
+            {
                 std::cerr << "Calculation error! ( " << e.what() << ")\n";
-                if (memoryAllocated){
+                if (memoryAllocated)
+                {
                     delete is;
                 }
                 return -2;
             }
         }
-        // i++;
     }
-    if (!results.isEmpty()){
+    if (!results.isEmpty())
+    {
         long long res = results.drop();
         std::cout << res;
-        for ( ;!results.isEmpty();){
+        while (!results.isEmpty())
+        {
             res = results.drop();
             std::cout << ' ' << res;
         }
         std::cout << '\n';
     }
-    if (memoryAllocated){
+    if (memoryAllocated)
+    {
         delete is;
     }
     return 0;
