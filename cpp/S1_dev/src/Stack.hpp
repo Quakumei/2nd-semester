@@ -1,21 +1,47 @@
 #ifndef STACK_H
 #define STACK_H
-
 #include "List.hpp"
+
 template <class T>
-class Stack : public List<T>
+class Stack
 {
 public:
-    Stack(){};
-    ~Stack(){};
+    Stack<T>()
+    {
+        list_data = List<T>();
+    };
+    ~Stack<T>(){};
 
-    // реализуем интерфейс
-    void push(T d) { list_.pushBack(d); };
-    T drop() { return list_.dropFront(); };
+    void push(T a) { list_.pushHead(a); };
+    T drop() { return list_.dropHead(); };
+
     T peek() const { return list_.top(); };
-    bool isEmpty() const { return list_.isEmpty(); }
+    bool isEmpty() const { return list_.isEmpty(); };
+
+    Stack(const Stack &st)
+    {
+        list_ = st.list_;
+    };
+    Stack(Stack &&st)
+    {
+        list_ = st.list_;
+    };
+    Stack &operator=(const Stack &st)
+    {
+        list_ = st.list_;
+
+        return *this;
+    };
+    Stack &operator=(Stack &&st)
+    {
+        list_ = st.list_;
+
+        return *this;
+    };
 
 private:
-    List<T> list_;
+    List<T> list_data;
+    List<T> &list_ = list_data;
 };
+
 #endif

@@ -1,7 +1,9 @@
-#include "ExpressionCalculator.h"
 #include <string>
 #include <cctype>
+
 #include "Stack.hpp"
+#include "ExpressionCalculator.h"
+#include "Queue.hpp"
 
 ExpressionCalculator::ExpressionCalculator(const std::string &expr)
 {

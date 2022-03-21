@@ -16,22 +16,20 @@ public:
     List();
     List(const List &);
     List(List &&) noexcept;
-    virtual ~List();
+    ~List();
     List &operator=(const List &);
     List &operator=(List &&) noexcept;
 
-    void pushBack(T);
-    void pushFront(T);
-    T dropBack();
-    T dropFront();
+    void pushTail(T);
+    void pushHead(T);
+    T dropHead();
 
     T top() const;
     T bottom() const;
 
     bool isEmpty() const noexcept;
 
-    template <class U>
-    friend std::ostream &operator<<(std::ostream &is, const List<U> &list);
+    // friend std::ostream &operator<<(std::ostream &is, const List &list);
 
 private:
     struct node_t
@@ -47,17 +45,8 @@ private:
 };
 
 template <class T>
-void List<T>::pushBack(T d)
+void List<T>::pushTail(T d)
 {
-    node_t *newNode = new node_t;
-    newNode->data = d;
-    newNode->next = head_;
-    head_ = newNode;
-};
-template <class T>
-void List<T>::pushFront(T d)
-{
-
     if (!head_)
     {
         head_ = tail_ = new node_t;
@@ -71,32 +60,20 @@ void List<T>::pushFront(T d)
     tail_->next = nullptr;
 };
 template <class T>
-T List<T>::dropBack()
+void List<T>::pushHead(T val)
 {
-    // untested
+
+    node_t *newNode = new node_t;
+    newNode->data = val;
+    newNode->next = head_;
+    head_ = newNode;
+};
+template <class T>
+T List<T>::dropHead()
+{
     if (!head_)
     {
         throw std::logic_error("Queue is empty");
-    }
-    int res = head_->data;
-    node_t *temp = head_;
-    if (head_ == tail_)
-    {
-        head_ = tail_ = nullptr;
-    }
-    else
-    {
-        head_ = head_->next;
-    }
-    delete temp;
-    return res;
-};
-template <class T>
-T List<T>::dropFront()
-{
-    if (!head_)
-    {
-        throw std::logic_error("List is empty (underflow)");
     }
     T res = head_->data;
     node_t *temp = head_;
@@ -137,7 +114,7 @@ List<T>::List(const List &list) : head_(nullptr),
     node_t *src = list.head_;
     while (src)
     {
-        temp.pushFront(src->data);
+        temp.pushTail(src->data);
         src = src->next;
     }
     swap(temp);
@@ -192,12 +169,13 @@ template <class T>
 void List<T>::swap(List &list) noexcept
 {
     std::swap(head_, list.head_);
+    std::swap(tail_, list.tail_);
 }
 
 // template <class T>
 // std::ostream &operator<<(std::ostream &is, const List<T> &list)
 // {
-//     list->node_t *temp = list->head_;
+//     node_t *temp = list->head_;
 //     if (temp)
 //     {
 //         is << temp->data;
