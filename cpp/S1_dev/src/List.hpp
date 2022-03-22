@@ -73,7 +73,7 @@ T List<T>::dropHead()
 {
     if (!head_)
     {
-        throw std::logic_error("Queue is empty");
+        throw std::logic_error("List is empty");
     }
     T res = head_->data;
     node_t *temp = head_;

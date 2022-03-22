@@ -6,80 +6,57 @@
 
 int main(int argc, char *argv[])
 {
-    bool memoryAllocated = false;
-    std::istream *is;
-    switch (argc)
+    std::ifstream ifs;
+    if (argc != 1)
     {
-    case 2:
-    {
-        std::string filename = argv[1];
-        is = new std::ifstream(filename);
-        memoryAllocated = true;
+        ifs.open(argv[1]);
 
-        if (is->peek() == EOF && is->eof())
+        if (!ifs.is_open())
         {
-            std::cout << '\n';
-            delete is;
-            memoryAllocated = false;
-            return 0;
-        }
-        break;
-    }
-    case 1:
-        is = &std::cin;
-        break;
-    default:
-        throw std::logic_error("Filename should be specified as an only argument");
-    }
-
-    std::string line;
-    Stack<long long> results;
-
-    while (!(is->peek() == EOF || is->eof()))
-    {
-        std::getline(*is, line);
-
-        if (!line.empty())
-        {
-            try
-            {
-                ExpressionCalculator ec(line);
-                results.push(ec.solve());
-            }
-            catch (std::logic_error const &e)
-            {
-                std::cerr << "Bad expression! ( " << e.what() << ")\n";
-                if (memoryAllocated)
-                {
-                    delete is;
-                }
-                return -1;
-            }
-            catch (std::overflow_error const &e)
-            {
-                std::cerr << "Calculation error! ( " << e.what() << ")\n";
-                if (memoryAllocated)
-                {
-                    delete is;
-                }
-                return -2;
-            }
+            std::cerr << "File error.\n";
+            return 1;
         }
     }
-    if (!results.isEmpty())
+    std::istream &is = (argc == 1) ? std::cin : ifs;
+
+    Stack<long long> result;
+    try
     {
-        long long res = results.drop();
-        std::cout << res;
-        while (!results.isEmpty())
+        std::string line = "";
+        while (getline(is, line))
         {
-            res = results.drop();
-            std::cout << ' ' << res;
+            if (line.empty())
+                continue;
+
+            ExpressionCalculator ar(line);
+            result.push(ar.solve());
         }
-        std::cout << '\n';
     }
-    if (memoryAllocated)
+    catch (std::overflow_error &e)
     {
-        delete is;
+        std::cerr << "Overflow error! " << e.what() << std::endl;
+        return 1;
     }
+    catch (std::logic_error &e)
+    {
+        std::cerr << "Logic error! " << e.what() << std::endl;
+        return 2;
+    }
+    catch (const char *e)
+    {
+        std::cerr << "Error! " << e << std::endl;
+        return 3;
+    }
+
+    while (!result.isEmpty())
+    {
+        std::cout << result.drop();
+
+        if (!result.isEmpty())
+        {
+            std::cout << ' ';
+        }
+    }
+    std::cout << '\n';
     return 0;
 }
