@@ -8,7 +8,7 @@ class Stack
 public:
     Stack<T>()
     {
-        list_data = List<T>();
+        list_ = List<T>();
     };
     ~Stack<T>(){};
 
@@ -40,8 +40,7 @@ public:
     };
 
 private:
-    List<T> list_data;
-    List<T> &list_ = list_data;
+    List<T> list_;
 };
 
 #endif

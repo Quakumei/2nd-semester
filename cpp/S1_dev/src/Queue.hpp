@@ -9,7 +9,7 @@ class Queue
 public:
     Queue<T>()
     {
-        list_data = List<T>();
+        list_ = List<T>();
     };
     ~Queue<T>(){};
 
@@ -41,7 +41,6 @@ public:
     };
 
 private:
-    List<T> list_data;
-    List<T> &list_ = list_data;
+    List<T> list_;
 };
 #endif
