@@ -5,6 +5,8 @@
 #include "ExpressionCalculator.h"
 #include "Queue.hpp"
 
+using namespace tampio;
+
 ExpressionCalculator::ExpressionCalculator(const std::string &expr)
 {
     exprToLexemes(expr);

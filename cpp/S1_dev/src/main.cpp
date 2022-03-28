@@ -4,6 +4,8 @@
 #include "Stack.hpp"
 #include "ExpressionCalculator.h"
 
+using namespace tampio;
+
 int main(int argc, char *argv[])
 {
     std::ifstream ifs;

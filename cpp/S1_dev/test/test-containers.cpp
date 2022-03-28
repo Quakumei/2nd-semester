@@ -4,6 +4,8 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
+using namespace tampio;
+
 // TEST_CASE("List works as Stack", "[Containers]")
 // {
 //     List<int> stack;
