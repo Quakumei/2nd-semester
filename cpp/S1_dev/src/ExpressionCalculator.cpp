@@ -9,8 +9,9 @@
 
 namespace tampio
 {
-    ExpressionCalculator::ExpressionCalculator(const std::string &expression) : lexemes_(postfixForm(convertToLexemes(expression)))
+    ExpressionCalculator::ExpressionCalculator(const std::string &expression)
     {
+        lexemes_ = postfixForm(convertToLexemes(expression));
     }
 
     long long ExpressionCalculator::solve() const

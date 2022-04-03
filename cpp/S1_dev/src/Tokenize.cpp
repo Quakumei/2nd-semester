@@ -1,3 +1,6 @@
+#ifndef TOKENIZE_CPP
+#define TOKENIZE_CPP
+
 #include <string>
 #include "Queue.hpp"
 
@@ -31,3 +34,5 @@ namespace tampio
         return result;
     }
 }
+
+#endif
