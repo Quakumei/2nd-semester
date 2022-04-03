@@ -9,7 +9,7 @@ using namespace tampio;
 int main(int argc, char *argv[])
 {
     std::ifstream ifs;
-    if (argc != 1)
+    if (argc >= 2)
     {
         ifs.open(argv[1]);
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
             return 1;
         }
     }
-    std::istream &is = (argc == 1) ? std::cin : ifs;
+    std::istream &is = (argc < 2) ? std::cin : ifs;
 
     Stack<long long> result;
     try
@@ -37,17 +37,17 @@ int main(int argc, char *argv[])
     catch (std::overflow_error &e)
     {
         std::cerr << "Overflow error! " << e.what() << std::endl;
-        return 1;
+        return 69;
     }
     catch (std::logic_error &e)
     {
         std::cerr << "Logic error! " << e.what() << std::endl;
-        return 2;
+        return 420;
     }
     catch (const char *e)
     {
         std::cerr << "Error! " << e << std::endl;
-        return 3;
+        return 322;
     }
 
     while (!result.isEmpty())

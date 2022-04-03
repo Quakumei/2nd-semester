@@ -15,9 +15,9 @@ namespace tampio
     {
     public:
         List();
+        ~List();
         List(const List &);
         List(List &&) noexcept;
-        ~List();
         List &operator=(const List &);
         List &operator=(List &&) noexcept;
 
@@ -172,23 +172,5 @@ namespace tampio
         std::swap(head_, list.head_);
         std::swap(tail_, list.tail_);
     }
-
-    // template <class T>
-    // std::ostream &operator<<(std::ostream &is, const List<T> &list)
-    // {
-    //     List<T>::node_t * temp = list->head_;
-    //     if (temp)
-    //     {
-    //         is << temp->data;
-    //         temp = temp->next;
-    //     }
-    //     while (temp)
-    //     {
-    //         is << " " << temp->data;
-    //         temp = temp->next;
-    //     }
-    //     return is;
-    // }
-
 }
 #endif

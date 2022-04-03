@@ -2,63 +2,47 @@
 #define STACK_H
 
 #include "List.hpp"
-
-namespace tampio 
+namespace tampio
 {
+
     template <class T>
     class Stack
     {
     public:
         ~Stack<T>(){};
 
-        Stack<T>(): list_(List<T>()) {};
+        Stack<T>() = default;
 
-        void push(T a)
-        {
-            list_.pushHead(a);
-        };
+        void push(T a);
+        T drop();
+        T peek() const;
 
-        T drop()
-        {
-            return list_.dropHead();
-        };
-
-        T peek() const
-        {
-            return list_.top();
-        };
-
-        bool isEmpty() const
-        {
-            return list_.isEmpty();
-        };
-
-        Stack(const Stack &st)
-        {
-            list_ = st.list_;
-        };
-
-        Stack(Stack &&st)
-        {
-            list_ = st.list_;
-        };
-
-        Stack &operator=(const Stack &st)
-        {
-            list_ = st.list_;
-            return *this;
-        };
-
-        Stack &operator=(Stack &&st)
-        {
-            list_ = st.list_;
-            return *this;
-        };
+        bool isEmpty() const;
 
     private:
         List<T> list_;
     };
-}
 
+    template <class T>
+    void Stack<T>::push(T a)
+    {
+        list_.pushHead(a);
+    };
+    template <class T>
+    T Stack<T>::drop()
+    {
+        return list_.dropHead();
+    };
+    template <class T>
+    T Stack<T>::peek() const
+    {
+        return list_.top();
+    };
+    template <class T>
+    bool Stack<T>::isEmpty() const
+    {
+        return list_.isEmpty();
+    };
+}
 
 #endif

@@ -2,61 +2,44 @@
 #define QUEUE_H
 
 #include "List.hpp"
-
-namespace tampio 
+namespace tampio
 {
+
     template <class T>
     class Queue
     {
     public:
-        ~Queue<T>() {};
+        Queue<T>() = default;
 
-        Queue<T>(): list_(List<T>()) {};
+        void push(T a);
+        T drop();
+        T peek() const;
 
-        void push(T a)
-        {
-            list_.pushTail(a);
-        };
-
-        T drop()
-        {
-            return list_.dropHead();
-        };
-
-        T peek() const
-        {
-            return list_.top();
-        };
-
-        bool isEmpty() const
-        {
-            return list_.isEmpty();
-        };
-
-        Queue(const Queue &st)
-        {
-            list_ = st.list_;
-        };
-
-        Queue(Queue &&st)
-        {
-            list_ = st.list_;
-        };
-
-        Queue &operator=(const Queue &st)
-        {
-            list_ = st.list_;
-            return *this;
-        };
-
-        Queue &operator=(Queue &&st)
-        {
-            list_ = st.list_;
-            return *this;
-        };
+        bool isEmpty() const;
 
     private:
         List<T> list_;
+    };
+
+    template <class T>
+    void Queue<T>::push(T a)
+    {
+        list_.pushTail(a);
+    };
+    template <class T>
+    T Queue<T>::drop()
+    {
+        return list_.dropHead();
+    };
+    template <class T>
+    T Queue<T>::peek() const
+    {
+        return list_.top();
+    };
+    template <class T>
+    bool Queue<T>::isEmpty() const
+    {
+        return list_.isEmpty();
     };
 }
 
