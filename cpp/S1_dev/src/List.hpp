@@ -21,8 +21,8 @@ namespace tampio
         List &operator=(const List &);
         List &operator=(List &&) noexcept;
 
-        void pushTail(T);
-        void pushHead(T);
+        void pushTail(const T &);
+        void pushHead(const T &);
         T dropHead();
 
         T top() const;
@@ -46,7 +46,7 @@ namespace tampio
     };
 
     template <class T>
-    void List<T>::pushTail(T d)
+    void List<T>::pushTail(const T &d)
     {
         if (!head_)
         {
@@ -61,7 +61,7 @@ namespace tampio
         tail_->next = nullptr;
     };
     template <class T>
-    void List<T>::pushHead(T val)
+    void List<T>::pushHead(const T &val)
     {
         node_t *newNode = new node_t;
         newNode->data = val;
@@ -76,8 +76,10 @@ namespace tampio
             throw std::logic_error("List is empty");
         }
         T res = head_->data;
+        node_t *temp = head_;
         head_ = (head_ == tail_) ? tail_ = nullptr : head_->next;
 
+        delete temp;
         return res;
     };
 

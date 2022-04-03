@@ -1,9 +1,4 @@
-#ifndef TOKENIZE_CPP
-#define TOKENIZE_CPP
-
-#include <string>
-#include "Queue.hpp"
-
+#include "Tokenize.h"
 namespace tampio
 {
     Queue<std::string> convertToLexemes(const std::string &expr)
@@ -35,4 +30,3 @@ namespace tampio
     }
 }
 
-#endif

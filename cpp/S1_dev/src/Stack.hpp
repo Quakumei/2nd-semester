@@ -9,6 +9,7 @@ namespace tampio
     {
     public:
         Stack<T>() = default;
+        ~Stack<T>() = default;
 
         void push(const T &a);
         T drop();

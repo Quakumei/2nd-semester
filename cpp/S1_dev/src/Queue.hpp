@@ -10,6 +10,7 @@ namespace tampio
     {
     public:
         Queue<T>() = default;
+        ~Queue<T>() = default;
 
         void push(const T &a);
         T drop();

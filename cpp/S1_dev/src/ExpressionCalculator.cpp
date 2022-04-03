@@ -5,7 +5,7 @@
 #include "Queue.hpp"
 
 #include "ExpressionCalculator.h"
-#include "Tokenize.cpp"
+#include "Tokenize.h"
 
 namespace tampio
 {
