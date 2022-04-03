@@ -11,7 +11,7 @@ namespace tampio
     public:
         Queue<T>() = default;
 
-        void push(T a);
+        void push(const T &a);
         T drop();
         T peek() const;
 
@@ -22,7 +22,7 @@ namespace tampio
     };
 
     template <class T>
-    void Queue<T>::push(T a)
+    void Queue<T>::push(const T &a)
     {
         list_.pushTail(a);
     };

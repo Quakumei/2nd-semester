@@ -4,23 +4,28 @@
 #include <string>
 #include "Queue.hpp"
 
-namespace tampio 
+namespace tampio
 {
     class ExpressionCalculator
     {
     public:
-        ExpressionCalculator(const std::string &);
+        ExpressionCalculator(const std::string &expression);
         long long solve() const;
-        Queue<std::string> postfixForm(Queue<std::string>) const;
 
     private:
-        void exprToLexemes(const std::string &);
         Queue<std::string> lexemes_;
-        static int order(const char &);
+        Queue<std::string> postfixForm(Queue<std::string>) const;
+
+        const std::string OPERATORS_ = "-+/*%";
+        enum Priority : int
+        {
+            PRIORITY_PARENTHESIS,
+            PRIORITY_ADDITION,
+            PRIORITY_MULTIPLICATION
+        };
+        static Priority order(const char &);
         static bool isHigher(const char &, const char &);
     };
 }
-
-
 
 #endif

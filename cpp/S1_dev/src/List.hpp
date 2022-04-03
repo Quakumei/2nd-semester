@@ -63,7 +63,6 @@ namespace tampio
     template <class T>
     void List<T>::pushHead(T val)
     {
-
         node_t *newNode = new node_t;
         newNode->data = val;
         newNode->next = head_;
@@ -77,16 +76,8 @@ namespace tampio
             throw std::logic_error("List is empty");
         }
         T res = head_->data;
-        node_t *temp = head_;
-        if (head_ == tail_)
-        {
-            head_ = tail_ = nullptr;
-        }
-        else
-        {
-            head_ = head_->next;
-        }
-        delete temp;
+        head_ = (head_ == tail_) ? tail_ = nullptr : head_->next;
+
         return res;
     };
 
@@ -103,13 +94,13 @@ namespace tampio
 
     template <class T>
     List<T>::List() : head_(nullptr),
-                    tail_(nullptr)
+                      tail_(nullptr)
     {
     }
 
     template <class T>
     List<T>::List(const List &list) : head_(nullptr),
-                                    tail_(nullptr)
+                                      tail_(nullptr)
     {
         List<T> temp;
         node_t *src = list.head_;
@@ -123,7 +114,7 @@ namespace tampio
 
     template <class T>
     List<T>::List(List &&list) noexcept : head_(nullptr),
-                                        tail_(nullptr)
+                                          tail_(nullptr)
     {
         swap(list);
     }

@@ -1,202 +1,155 @@
-#include <string>
+#include <sstream>
 #include <cctype>
 
 #include "Stack.hpp"
-#include "ExpressionCalculator.h"
 #include "Queue.hpp"
 
-namespace tampio 
+#include "ExpressionCalculator.h"
+#include "Tokenize.cpp"
+
+namespace tampio
 {
-    ExpressionCalculator::ExpressionCalculator(const std::string &expr)
+    ExpressionCalculator::ExpressionCalculator(const std::string &expression) : lexemes_(postfixForm(convertToLexemes(expression)))
     {
-        exprToLexemes(expr);
     }
 
     long long ExpressionCalculator::solve() const
     {
-        Queue<std::string> postfixExpr = postfixForm(lexemes_);
-
+        Queue<std::string> postfixExpr = lexemes_;
         Stack<long long> values;
-        for (std::string lexeme = postfixExpr.drop();; lexeme = postfixExpr.drop())
-        {
 
+        std::string lexeme = "";
+        while (!postfixExpr.isEmpty())
+        {
+            lexeme = postfixExpr.drop();
             if (isdigit(lexeme[0]))
             {
                 values.push(std::stoll(lexeme));
+                continue;
             }
-            else
-            {
 
-                long long right = values.drop();
-                long long left = values.drop();
-                long long res;
-                switch (lexeme[0])
-                {
-                case '+':
-                    res = left + right;
-                    if ((left <= res) && (right <= res))
-                    {
-                        values.push(res);
-                    }
-                    else
-                    {
-                        throw std::overflow_error("long long overflow occured (addition)");
-                    }
-                    break;
-                case '-':
-                    res = left - right;
-                    if ((left >= res))
-                    {
-                        values.push(res);
-                    }
-                    else
-                    {
-                        throw std::overflow_error("long long overflow occured (subtraction)");
-                    }
-                    break;
-                    break;
-                case '/':
-                    values.push(left / right);
-                    break;
-                case '*':
-                    res = left * right;
-                    if (res / left * left == res / right * right)
-                    {
-                        values.push(res);
-                    }
-                    else
-                    {
-                        throw std::overflow_error("long long overflow occured (multiplication)");
-                    }
-                    break;
-                case '%':
-                    values.push((left < 0) ? (right - (abs(left) % right)) : left % right);
-                    break;
-                default:
-                    throw std::logic_error("Unknown operator! (solve)");
-                }
-            }
-            if (postfixExpr.isEmpty())
+            long long right = values.drop();
+            long long left = values.drop();
+            long long res = 0;
+            char op = lexeme[0];
+            switch (op)
             {
+            case '+':
+                res = left + right;
+                if (!((left <= res) || (right <= res)))
+                {
+                    throw std::overflow_error("long long overflow occured (addition)");
+                }
                 break;
+
+            case '-':
+                res = left - right;
+                if (!(left >= res))
+                {
+                    throw std::overflow_error("long long overflow occured (subtraction)");
+                }
+                break;
+
+            case '*':
+                res = left * right;
+                if (!(res / left * left == res / right * right))
+                {
+                    throw std::overflow_error("long long overflow occured (multiplication)");
+                }
+                break;
+
+            case '/':
+                res = left / right;
+                break;
+
+            case '%':
+                res = (left < 0) ? (right - (abs(left) % right)) : left % right;
+                break;
+
+            default:
+                std::stringstream ss;
+                ss << "Unknown operator --> '" << op << "' <-- solve()";
+                throw std::logic_error(ss.str().c_str());
             }
+            values.push(res);
         }
 
         long long res = values.drop();
         if (!values.isEmpty())
         {
+            std::cout << "WHAT'S LEFT: " << values.peek() << '\n';
+            std::cout << "WHAT'S DROPPED: " << res << '\n';
             throw std::logic_error("Bad expression! (solve)");
         }
 
         return res;
     }
 
-    void ExpressionCalculator::exprToLexemes(const std::string &expr)
-    {
-        std::string res = "";
-        for (std::size_t i = 0; i < expr.length(); i++)
-        {
-            std::string lexeme = "";
-            if (expr[i] != ' ')
-            {
-                if (isdigit(expr[i]))
-                {
-                    for (; (expr[i] != ' ') && (i < expr.length()) && isdigit(expr[i]); i++)
-                    {
-                        lexeme.append(std::string(1, expr[i]));
-                    }
-                    i--;
-                    lexemes_.push(lexeme);
-                }
-                else
-                {
-                    lexeme.append(std::string(1, expr[i]));
-                    lexemes_.push(lexeme);
-                }
-            }
-        }
-    }
-
-    int ExpressionCalculator::order(const char &op)
+    ExpressionCalculator::Priority ExpressionCalculator::order(const char &op)
     {
         switch (op)
         {
+        case '(':
+        case ')':
+            return PRIORITY_PARENTHESIS;
         case '+':
-            return 1;
         case '-':
-            return 1;
+            return PRIORITY_ADDITION;
         case '*':
-            return 2;
         case '/':
-            return 2;
         case '%':
-            return 2;
+            return PRIORITY_MULTIPLICATION;
 
         default:
-            return 0;
+            throw std::logic_error("Unknown operator!");
         }
     }
 
     bool ExpressionCalculator::isHigher(const char &a, const char &b)
     {
-        if (order(a) >= order(b))
-            return true;
-        else
-            return false;
+        return order(a) >= order(b);
     }
 
     Queue<std::string> ExpressionCalculator::postfixForm(Queue<std::string> lexemes) const
     {
-        Stack<std::string> stk;
+        Stack<std::string> stack;
         Queue<std::string> postfix_tokens;
-        stk.push("(");
+        stack.push("(");
         lexemes.push(")");
 
         while (!lexemes.isEmpty())
         {
-
             std::string token = lexemes.drop();
-
             if (token == "(")
             {
-                stk.push(token);
+                stack.push(token);
             }
             else if (token == ")")
             {
-
-                // Pop out all the operators and append them to postfix expression till an opening bracket is found
-                while (stk.peek() != "(")
+                while (stack.peek() != "(")
                 {
-                    postfix_tokens.push(stk.drop());
+                    postfix_tokens.push(stack.drop());
                 }
-                stk.drop();
+                stack.drop();
             }
-            else if (token == "*" || token == "/" || token == "+" || token == "-" || token == "%")
+            else if (OPERATORS_.find(token) != std::string::npos)
             {
-
-                // Pop out operators with higher precedence at the top of the stack and append them to
-                // the postfix expression, before pushing the current operator to the stack.
-                while (!stk.isEmpty() && order(stk.peek()[0]) >= order(token[0]))
+                while (!stack.isEmpty() && isHigher(stack.peek()[0], token[0]))
                 {
-                    postfix_tokens.push(stk.drop());
+                    postfix_tokens.push(stack.drop());
                 }
-                stk.push(token);
+                stack.push(token);
             }
             else
             {
-                // Positions of the operands do not change in the postfix expression so append
-                // an operand as it is.
                 postfix_tokens.push(token);
             }
         }
-
-        if (!stk.isEmpty())
+        if (!stack.isEmpty())
         {
-            throw std::logic_error("too many operators!");
+            throw std::logic_error("Too many operators!");
         }
-
         return postfix_tokens;
     }
 
 }
-

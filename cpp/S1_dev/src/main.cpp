@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     }
     std::istream &is = (argc < 2) ? std::cin : ifs;
 
-    Stack<long long> result;
+    Stack<long long> results;
     try
     {
         std::string line = "";
@@ -31,30 +31,30 @@ int main(int argc, char *argv[])
                 continue;
 
             ExpressionCalculator ar(line);
-            result.push(ar.solve());
+            results.push(ar.solve());
         }
     }
     catch (std::overflow_error &e)
     {
-        std::cerr << "Overflow error! " << e.what() << std::endl;
+        std::cerr << "Overflow error! " << e.what() << '\n';
         return 69;
     }
     catch (std::logic_error &e)
     {
-        std::cerr << "Logic error! " << e.what() << std::endl;
+        std::cerr << "Logic error! " << e.what() << '\n';
         return 420;
     }
     catch (const char *e)
     {
-        std::cerr << "Error! " << e << std::endl;
+        std::cerr << "Error! " << e << '\n';
         return 322;
     }
 
-    while (!result.isEmpty())
+    while (!results.isEmpty())
     {
-        std::cout << result.drop();
+        std::cout << results.drop();
 
-        if (!result.isEmpty())
+        if (!results.isEmpty())
         {
             std::cout << ' ';
         }

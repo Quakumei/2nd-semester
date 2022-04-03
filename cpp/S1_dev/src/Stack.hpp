@@ -4,16 +4,13 @@
 #include "List.hpp"
 namespace tampio
 {
-
     template <class T>
     class Stack
     {
     public:
-        ~Stack<T>(){};
-
         Stack<T>() = default;
 
-        void push(T a);
+        void push(const T &a);
         T drop();
         T peek() const;
 
@@ -24,7 +21,7 @@ namespace tampio
     };
 
     template <class T>
-    void Stack<T>::push(T a)
+    void Stack<T>::push(const T &a)
     {
         list_.pushHead(a);
     };
