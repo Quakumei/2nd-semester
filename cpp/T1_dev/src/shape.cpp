@@ -1,5 +1,6 @@
 #include "shape.hpp"
 #include <stdexcept>
+#include "rectangle.hpp"
 
 void tampio::Shape::move(const tampio::point_t& new_pos)
 {
@@ -25,4 +26,8 @@ void tampio::Shape::scale(const point_t& center, double factor)
     }
     scaleFrame(factor);
     scaleParameters(center, factor);
+}
+
+tampio::rectangle_t tampio::Shape::getFrameRect() const {
+    return frame_;
 }

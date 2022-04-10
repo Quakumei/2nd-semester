@@ -9,10 +9,12 @@ namespace tampio
     {
     public:
         Rectangle(const point_t& a, const point_t& b);
-        double getArea() const override;
+        Rectangle(const rectangle_t& rect);
+        double getArea() const;
     private:
-        void scaleParameters(const point_t& center, double factor) override;
+        void scaleParameters(const point_t& center, double factor);
         point_t a_, b_;
+        rectangle_t frame_;
     };
 }
 

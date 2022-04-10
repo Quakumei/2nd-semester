@@ -23,5 +23,7 @@ namespace tampio
                       point_t const &rhs);
     point_t operator*(point_t const &lhs,
                       double factor);
+    point_t operator/(point_t const &lhs,
+                      double factor);
 }
 #endif

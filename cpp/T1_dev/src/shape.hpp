@@ -8,14 +8,17 @@ namespace tampio
     class Shape
     {
     public:
+        enum ShapeType
+        {
+            UNKNOWN = 0, RECTANGLE, CIRCLE, ELLIPSIS
+        };
+
         Shape() {
             frame_ = rectangle_t();
         };
         virtual ~Shape() = default;
-
         virtual double getArea() const = 0;
-        virtual rectangle_t getFrameRect() const = 0;
-        virtual void scale(double factor) = 0;
+        rectangle_t getFrameRect() const;
         void move(const point_t&  p);
         void move(double dx, double dy);
         void scale(const point_t& center, double factor);
