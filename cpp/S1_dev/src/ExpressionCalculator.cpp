@@ -16,8 +16,8 @@ namespace tampio
 
     long long ExpressionCalculator::solve() const
     {
-        Queue<std::string> postfixExpr = lexemes_;
-        Stack<long long> values;
+        Queue< std::string > postfixExpr = lexemes_;
+        Stack< long long > values;
 
         std::string lexeme = "";
         while (!postfixExpr.isEmpty())
@@ -114,10 +114,10 @@ namespace tampio
         return order(a) >= order(b);
     }
 
-    Queue<std::string> ExpressionCalculator::postfixForm(Queue<std::string> lexemes) const
+    Queue<std::string > ExpressionCalculator::postfixForm(Queue< std::string > lexemes) const
     {
-        Stack<std::string> stack;
-        Queue<std::string> postfix_tokens;
+        Stack< std::string > stack;
+        Queue< std::string > postfix_tokens;
         stack.push("(");
         lexemes.push(")");
 

@@ -5,7 +5,7 @@
 #include "Queue.hpp"
 
 namespace tampio {
-    Queue<std::string> convertToLexemes(const std::string &expr);
+    Queue< std::string > convertToLexemes(const std::string &expr);
 }
 
 #endif

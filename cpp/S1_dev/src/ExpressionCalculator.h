@@ -13,8 +13,8 @@ namespace tampio
         long long solve() const;
 
     private:
-        Queue<std::string> lexemes_;
-        Queue<std::string> postfixForm(Queue<std::string>) const;
+        Queue< std::string > lexemes_;
+        Queue< std::string > postfixForm(Queue< std::string >) const;
 
         const std::string OPERATORS_ = "-+/*%";
         enum Priority : int

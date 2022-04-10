@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     }
     std::istream &is = (argc < 2) ? std::cin : ifs;
 
-    Stack<long long> results;
+    Stack< long long > results;
     try
     {
         std::string line = "";
