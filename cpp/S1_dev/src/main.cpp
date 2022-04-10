@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
         if (!ifs.is_open())
         {
-            std::cerr << "File error.\n";
+            std::cerr << "Error when opening file.\n";
             return 1;
         }
     }
@@ -34,25 +34,16 @@ int main(int argc, char *argv[])
             results.push(ar.solve());
         }
     }
-    catch (std::overflow_error &e)
+    catch (const std::exception &e)
     {
-        std::cerr << "Overflow error! " << e.what() << '\n';
-        return 69;
-    }
-    catch (std::logic_error &e)
-    {
-        std::cerr << "Logic error! " << e.what() << '\n';
-        return 420;
-    }
-    catch (const char *e)
-    {
-        std::cerr << "Error! " << e << '\n';
-        return 322;
+        std::cerr << "[Error] : " << e.what() << '\n';
+        return 2;
     }
 
     while (!results.isEmpty())
     {
-        std::cout << results.drop();
+        std::cout << results.peek();
+        results.rm_back();
 
         if (!results.isEmpty())
         {

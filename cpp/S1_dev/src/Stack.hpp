@@ -12,7 +12,8 @@ namespace tampio
         ~Stack<T>() = default;
 
         void push(const T &a);
-        T drop();
+
+        void rm_back();
         T peek() const;
 
         bool isEmpty() const;
@@ -21,26 +22,27 @@ namespace tampio
         List<T> list_;
     };
 
-    template <class T>
-    void Stack<T>::push(const T &a)
-    {
-        list_.pushHead(a);
-    };
-    template <class T>
-    T Stack<T>::drop()
-    {
-        return list_.dropHead();
-    };
-    template <class T>
-    T Stack<T>::peek() const
-    {
-        return list_.top();
-    };
-    template <class T>
-    bool Stack<T>::isEmpty() const
-    {
-        return list_.isEmpty();
-    };
+}
+
+template <class T>
+void tampio::Stack<T>::push(const T &a)
+{
+    list_.pushHead(a);
+}
+template <class T>
+void tampio::Stack<T>::rm_back()
+{
+    list_.rm_back();
+}
+template <class T>
+T tampio::Stack<T>::peek() const
+{
+    return list_.top();
+}
+template <class T>
+bool tampio::Stack<T>::isEmpty() const
+{
+    return list_.isEmpty();
 }
 
 #endif

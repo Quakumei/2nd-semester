@@ -22,15 +22,19 @@ namespace tampio
         std::string lexeme = "";
         while (!postfixExpr.isEmpty())
         {
-            lexeme = postfixExpr.drop();
+            lexeme = postfixExpr.peek();
+            postfixExpr.rm_back();
             if (isdigit(lexeme[0]))
             {
                 values.push(std::stoll(lexeme));
                 continue;
             }
 
-            long long right = values.drop();
-            long long left = values.drop();
+            long long right = values.peek();
+            values.rm_back();
+            long long left = values.peek();
+            values.rm_back();
+
             long long res = 0;
             char op = lexeme[0];
             switch (op)
@@ -75,11 +79,10 @@ namespace tampio
             values.push(res);
         }
 
-        long long res = values.drop();
+        long long res = values.peek();
+        values.rm_back();
         if (!values.isEmpty())
         {
-            std::cout << "WHAT'S LEFT: " << values.peek() << '\n';
-            std::cout << "WHAT'S DROPPED: " << res << '\n';
             throw std::logic_error("Bad expression! (solve)");
         }
 
@@ -120,7 +123,8 @@ namespace tampio
 
         while (!lexemes.isEmpty())
         {
-            std::string token = lexemes.drop();
+            std::string token = lexemes.peek();
+            lexemes.rm_back();
             if (token == "(")
             {
                 stack.push(token);
@@ -129,15 +133,18 @@ namespace tampio
             {
                 while (stack.peek() != "(")
                 {
-                    postfix_tokens.push(stack.drop());
+                    postfix_tokens.push(stack.peek());
+                    stack.rm_back();
                 }
-                stack.drop();
+                stack.peek();
+                stack.rm_back();
             }
             else if (OPERATORS_.find(token) != std::string::npos)
             {
                 while (!stack.isEmpty() && isHigher(stack.peek()[0], token[0]))
                 {
-                    postfix_tokens.push(stack.drop());
+                    postfix_tokens.push(stack.peek());
+                    stack.rm_back();
                 }
                 stack.push(token);
             }

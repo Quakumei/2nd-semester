@@ -13,35 +13,36 @@ namespace tampio
         ~Queue<T>() = default;
 
         void push(const T &a);
-        T drop();
+
         T peek() const;
+        void rm_back();
 
         bool isEmpty() const;
 
     private:
         List<T> list_;
     };
+}
 
-    template <class T>
-    void Queue<T>::push(const T &a)
-    {
-        list_.pushTail(a);
-    };
-    template <class T>
-    T Queue<T>::drop()
-    {
-        return list_.dropHead();
-    };
-    template <class T>
-    T Queue<T>::peek() const
-    {
-        return list_.top();
-    };
-    template <class T>
-    bool Queue<T>::isEmpty() const
-    {
-        return list_.isEmpty();
-    };
+template <class T>
+void tampio::Queue<T>::push(const T &a)
+{
+    list_.pushTail(a);
+}
+template <class T>
+void tampio::Queue<T>::rm_back()
+{
+    list_.rm_back();
+}
+template <class T>
+T tampio::Queue<T>::peek() const
+{
+    return list_.top();
+}
+template <class T>
+bool tampio::Queue<T>::isEmpty() const
+{
+    return list_.isEmpty();
 }
 
 #endif
