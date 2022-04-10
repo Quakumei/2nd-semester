@@ -1,5 +1,5 @@
-
+namespace tampio {
     int main() {
-
-        return 0;    
+        
     }
+}
