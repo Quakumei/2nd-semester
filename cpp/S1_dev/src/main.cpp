@@ -27,8 +27,10 @@ int main(int argc, char *argv[])
         std::string line = "";
         while (getline(is, line))
         {
-            if (line.empty())
+            if (line.empty()) 
+            {
                 continue;
+            }
 
             ExpressionCalculator ar(line);
             results.push(ar.solve());

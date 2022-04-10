@@ -19,6 +19,7 @@ namespace tampio
         void pushHead(const T &);
 
         T dropHead();
+        
         // По аналогии с std::vector
         void rm_back();
         T top() const;
