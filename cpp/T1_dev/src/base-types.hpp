@@ -5,6 +5,7 @@ namespace tampio
 {
     struct point_t
     {
+        // point_t();
         point_t(double x, double y);
         double x, y;
     };

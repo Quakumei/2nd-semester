@@ -14,7 +14,7 @@ namespace tampio
         };
 
         Shape() {
-            frame_ = rectangle_t();
+            //frame_ = rectangle_t();
         };
         virtual ~Shape() = default;
         virtual double getArea() const = 0;

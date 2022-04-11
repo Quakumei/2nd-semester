@@ -32,7 +32,8 @@ int main()
             st = Shape::ShapeType::UNKNOWN;
         }
 
-        Shape *fig = nullptr;
+
+        Rectangle *fig = nullptr;
         switch (st)
         {
         case Shape::ShapeType::UNKNOWN:
@@ -44,10 +45,9 @@ int main()
             std::cin >> x1 >> y1 >> x2 >> y2;
             point_t a = point_t(x1, y1);
             point_t b = point_t(x2, y2);
-            fig = (Shape *)new Rectangle(a, b);
+            fig =  new Rectangle (a, b);
             break;
         }
-
         case Shape::ShapeType::CIRCLE:
         case Shape::ShapeType::ELLIPSIS:
             badInput = true;
@@ -55,17 +55,17 @@ int main()
         }
         if (!fig)
         {
-            // TODO: Skip a line
-            break;
+            // possible problems.
+            std::cin.ignore(256, '\n');
+            continue;
         }
-        std::cout << "\n adding:" << Rectangle(fig->getFrameRect()).getArea() << '\n';
         totalArea += Rectangle(fig->getFrameRect()).getArea();
         delete fig;
     }
     std::cout << "TOTAL AREA " << totalArea << '\n';
     if (badInput)
     {
-        std::cerr << "UNKNOWN FIGURES OCCURED, SKIPPED.\n";
+        std::cerr << "BAD FIGURES OCCURED, SKIPPED.\n";
     }
     return 0;
 }

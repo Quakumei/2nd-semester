@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include "rectangle.hpp"
 
+
 void tampio::Shape::move(const tampio::point_t& new_pos)
 {
     frame_.pos = new_pos;
