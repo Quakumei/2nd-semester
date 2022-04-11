@@ -1,7 +1,10 @@
 #include <iostream>
+#include <memory>
 
 #include "shape.hpp"
 #include "rectangle.hpp"
+
+
 
 using namespace tampio;
 
@@ -33,7 +36,7 @@ int main()
         }
 
 
-        Rectangle *fig = nullptr;
+        std::unique_ptr<Rectangle> fig = nullptr;
         switch (st)
         {
         case Shape::ShapeType::UNKNOWN:
@@ -45,7 +48,7 @@ int main()
             std::cin >> x1 >> y1 >> x2 >> y2;
             point_t a = point_t(x1, y1);
             point_t b = point_t(x2, y2);
-            fig =  new Rectangle (a, b);
+            fig = std::make_unique<Rectangle>(a, b);
             break;
         }
         case Shape::ShapeType::CIRCLE:
@@ -60,7 +63,6 @@ int main()
             continue;
         }
         totalArea += Rectangle(fig->getFrameRect()).getArea();
-        delete fig;
     }
     std::cout << "TOTAL AREA " << totalArea << '\n';
     if (badInput)
