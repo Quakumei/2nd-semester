@@ -11,10 +11,13 @@ namespace tampio
         Rectangle(const point_t& a, const point_t& b);
         Rectangle(const rectangle_t& rect);
         double getArea() const;
+        friend std::ostream& operator<<(std::ostream& os, const Rectangle& obj);
     private:
         void scaleParameters(const point_t& center, double factor);
         point_t a_, b_;
     };
+
 }
+
 
 #endif

@@ -1,5 +1,7 @@
 #include <iostream>
+#include <sstream>
 #include <memory>
+#include <limits>
 
 #include "shape.hpp"
 #include "rectangle.hpp"
@@ -13,6 +15,7 @@ int main()
     bool badInput = false;
 
     double totalArea = 0;
+    std::stringstream ss;
 
     std::string cmd = "";
     while (std::cin >> cmd && cmd != "SCALE")
@@ -36,7 +39,7 @@ int main()
         }
 
 
-        std::unique_ptr<Rectangle> fig = nullptr;
+        std::unique_ptr<Shape> fig = nullptr;
         switch (st)
         {
         case Shape::ShapeType::UNKNOWN:
@@ -58,13 +61,24 @@ int main()
         }
         if (!fig)
         {
-            // possible problems.
-            std::cin.ignore(256, '\n');
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
         }
         totalArea += Rectangle(fig->getFrameRect()).getArea();
+        ss << Rectangle(fig->getFrameRect())  << ' ';
     }
-    std::cout << "TOTAL AREA " << totalArea << '\n';
+    std::cout << totalArea << ' ' << ss.str().c_str() << '\n';
+    if (cmd == "SCALE") {
+        double x,y, factor;
+        std::cin  >> x >>  y  >> factor;
+        std::cout << "DOING SCALE WITH:  " << x << ' ' << y << ' ' << factor << '\n';
+        point_t center = point_t(x,y);
+        totalArea *= factor * factor;
+    }
+
+    std::cout.setf(std::ios::fixed);
+    std::cout.precision(1);
+    std::cout << totalArea << ' ' << ss.str().c_str() << '\n';
     if (badInput)
     {
         std::cerr << "BAD FIGURES OCCURED, SKIPPED.\n";
