@@ -20,8 +20,9 @@ tampio::Rectangle::Rectangle(
 {
     frame_ = rectangle_t(abs(b.x - a.x), abs(b.y - a.y), a + (b - a) / 2);
 }
-tampio::Rectangle::Rectangle(const rectangle_t &rect) : a_(rect.pos - point_t(rect.height / 2, rect.width / 2)),
-                                                        b_(rect.pos + point_t(rect.height / 2, rect.width / 2))
+tampio::Rectangle::Rectangle(const rectangle_t &rect) :
+    a_(rect.pos - point_t(rect.height / 2, rect.width / 2)),
+    b_(rect.pos + point_t(rect.height / 2, rect.width / 2))
 {
     frame_ = rect;
 }

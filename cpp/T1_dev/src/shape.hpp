@@ -10,7 +10,7 @@ namespace tampio
     public:
         enum ShapeType
         {
-            UNKNOWN = 0, RECTANGLE, CIRCLE, ELLIPSIS
+            UNKNOWN = 0, RECTANGLE, CIRCLE, ELLIPSE
         };
 
         Shape() {};

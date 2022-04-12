@@ -79,7 +79,7 @@ int main()
         }
         if (!fig)
         {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
             unknownFigure = true;
             continue;
         }
