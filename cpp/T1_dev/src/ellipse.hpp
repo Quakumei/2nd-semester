@@ -13,10 +13,9 @@ namespace tampio
 
     private:
         void scaleParameters(const point_t &center, double factor);
-        point_t center_;
         double radx_, rady_;
+        point_t center_;
     };
-
 }
 
 #endif

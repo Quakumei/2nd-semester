@@ -20,7 +20,7 @@ Shape::ShapeType stringToShapeType(const std::string &s)
     {
         st = Shape::ShapeType::CIRCLE;
     }
-    else if (s == "ELLIPSIS")
+    else if (s == "ELLIPSE")
     {
         st = Shape::ShapeType::ELLIPSE;
     }
@@ -47,9 +47,10 @@ int main()
             switch (st)
             {
             case Shape::ShapeType::UNKNOWN:
+                break;
             case Shape::ShapeType::ELLIPSE:
             {
-                double radx, rady, x,y;
+                double rady, radx, x, y;
                 std::cin >> x >> y >> rady >> radx;
                 point_t center = point_t(x,y);
                 fig = std::make_unique<Ellipse>(radx, rady, center);
@@ -83,7 +84,7 @@ int main()
             unknownFigure = true;
             continue;
         }
-        totalArea += Rectangle(fig->getFrameRect()).getArea();
+        totalArea += fig->getArea();
     }
 
     std::cout.setf(std::ios::fixed);
