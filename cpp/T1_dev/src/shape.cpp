@@ -1,5 +1,5 @@
-#include "shape.hpp"
 #include <stdexcept>
+#include "shape.hpp"
 #include "rectangle.hpp"
 
 
@@ -13,8 +13,9 @@ void tampio::Shape::move(double dx, double dy)
     frame_.pos = point_t(frame_.pos.x + dx, frame_.pos.y + dy);
 }
 
-void tampio::Shape::scaleFrame(double factor)
+void tampio::Shape::scaleFrame(const point_t& center, double factor)
 {
+    frame_.pos = frame_.pos + (center - frame_.pos) * factor;
     frame_.height *= factor;
     frame_.width *= factor;
 }
@@ -25,7 +26,7 @@ void tampio::Shape::scale(const point_t& center, double factor)
     {
         throw std::logic_error("Scale factor must be positive.");
     }
-    scaleFrame(factor);
+    scaleFrame(center, factor);
     scaleParameters(center, factor);
 }
 

@@ -13,9 +13,7 @@ namespace tampio
             UNKNOWN = 0, RECTANGLE, CIRCLE, ELLIPSIS
         };
 
-        Shape() {
-            //frame_ = rectangle_t();
-        };
+        Shape() {};
         virtual ~Shape() = default;
         virtual double getArea() const = 0;
         rectangle_t getFrameRect() const;
@@ -28,7 +26,7 @@ namespace tampio
         rectangle_t frame_;
 
     private:
-        void scaleFrame (double factor);
+        void scaleFrame (const point_t& center, double factor);
     };
 }
 #endif
