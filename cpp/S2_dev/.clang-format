@@ -1,0 +1,24 @@
+UseTab: false
+IndentWidth: 2
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false
+IndentCaseLabels: false
+ColumnLimit: 80
+SpacesInAngles: true
+AlwaysBreakTemplateDeclarations: Yes
+BreakConstructorInitializers: AfterColon
+#  PackConstructorInitializers: false # clang 14
+IncludeBlocks: Merge
+NamespaceIndentation: All
+IncludeCategories:
+  - Regex: '^"(llvm|llvm-c|clang|clang-c)/'
+    Priority: 3
+    SortPriority: 0
+    # CaseSensitive: true
+  - Regex: '^((<|")(gtest|gmock|isl|json)/)'
+    Priority: 2
+  - Regex: "<[[:alnum:].]+>"
+    Priority: 1
+  - Regex: ".*"
+    Priority: 4
+    SortPriority: 2
