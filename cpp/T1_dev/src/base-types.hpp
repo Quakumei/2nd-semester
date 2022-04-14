@@ -5,7 +5,7 @@ namespace tampio
 {
   struct point_t
   {
-    // point_t();
+    point_t();
     point_t(double x, double y);
     double x, y;
   };
@@ -22,5 +22,5 @@ namespace tampio
   point_t operator-(point_t const &lhs, point_t const &rhs);
   point_t operator*(point_t const &lhs, double factor);
   point_t operator/(point_t const &lhs, double factor);
-}
+} // namespace tampio
 #endif

@@ -6,10 +6,11 @@
 #include "ellipse.hpp"
 #include "rectangle.hpp"
 #include "shape.hpp"
+#include "shapecollection.hpp"
 
 using namespace tampio;
 
-Shape::ShapeType stringToShapeType(const std::string& s)
+Shape::ShapeType stringToShapeType(const std::string &s)
 {
   Shape::ShapeType st;
   if (s == "RECTANGLE")
@@ -30,6 +31,7 @@ Shape::ShapeType stringToShapeType(const std::string& s)
 
 int main()
 {
+  ShapeCollection< std::shared_ptr< Shape > > sc;
   bool unknownFigure = false;
   bool badKnownFigure = false;
   double totalArea = 0;
@@ -38,7 +40,7 @@ int main()
   while (std::cin >> cmd && !std::cin.eof() && cmd != "SCALE")
   {
     Shape::ShapeType st = stringToShapeType(cmd);
-    std::unique_ptr< Shape > fig = nullptr;
+    std::shared_ptr< Shape > fig = nullptr;
     try
     {
       switch (st)
@@ -71,7 +73,7 @@ int main()
         break;
       }
       }
-    } catch (const std::logic_error& e)
+    } catch (const std::logic_error &e)
     {
       badKnownFigure = true;
       continue;
@@ -82,39 +84,29 @@ int main()
       unknownFigure = true;
       continue;
     }
-    totalArea += fig->getArea();
+    sc.appendElement(fig);
   }
 
   std::cout.setf(std::ios::fixed);
   std::cout.precision(1);
-  std::cout << totalArea << ' ' << '\n';
+  std::cout << sc << '\n';
 
   try
   {
-    if (std::cin.eof())
+    if (std::cin.eof() || std::cin.bad() || cmd != "SCALE")
     {
       throw std::logic_error("No scale.");
     }
-    if (cmd == "SCALE")
-    {
-      double x, y, factor;
-      std::cin >> x >> y >> factor;
-      if (factor < 0)
-      {
-        throw std::logic_error("Scaling factor must be positive");
-      }
-      totalArea *= factor * factor;
-      // std::cout << "DOING SCALE WITH:  " << x << ' ' << y << ' ' << factor << '\n';
-      // point_t center = point_t(x,y);
-    }
-  } catch (const std::logic_error& e)
+    double x, y, factor;
+    std::cin >> x >> y >> factor;
+    sc.scale(point_t(x, y), factor);
+  } catch (const std::logic_error &e)
   {
     std::cerr << "Scaling error: " << e.what() << std::endl;
     return 1;
   }
 
-  std::cout << totalArea << ' ' << '\n';
-
+  std::cout << sc << '\n';
   if (unknownFigure)
   {
     std::cerr << "BAD FIGURES OCCURED, SKIPPED.\n";

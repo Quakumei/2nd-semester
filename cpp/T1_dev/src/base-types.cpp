@@ -5,22 +5,27 @@ tampio::point_t::point_t(double x_new, double y_new) :
     y(y_new)
 {}
 
-tampio::point_t tampio::operator+(tampio::point_t const& lhs, tampio::point_t const& rhs)
+tampio::point_t::point_t() :
+    x(0),
+    y(0)
+{}
+
+tampio::point_t tampio::operator+(tampio::point_t const &lhs, tampio::point_t const &rhs)
 {
   return tampio::point_t(lhs.x + rhs.x, lhs.x + rhs.y);
 }
 
-tampio::point_t tampio::operator-(tampio::point_t const& lhs, tampio::point_t const& rhs)
+tampio::point_t tampio::operator-(tampio::point_t const &lhs, tampio::point_t const &rhs)
 {
   return tampio::point_t(lhs.x - rhs.x, lhs.x - rhs.y);
 }
 
-tampio::point_t tampio::operator*(tampio::point_t const& lhs, double factor)
+tampio::point_t tampio::operator*(tampio::point_t const &lhs, double factor)
 {
   return tampio::point_t(lhs.x * factor, lhs.y * factor);
 }
 
-tampio::point_t tampio::operator/(tampio::point_t const& lhs, double factor)
+tampio::point_t tampio::operator/(tampio::point_t const &lhs, double factor)
 {
   return lhs * (1 / factor);
 }

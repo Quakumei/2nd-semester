@@ -17,6 +17,6 @@ namespace tampio
     point_t center_;
   };
 
-}
+} // namespace tampio
 
 #endif

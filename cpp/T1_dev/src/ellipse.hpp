@@ -16,6 +16,6 @@ namespace tampio
     double radx_, rady_;
     point_t center_;
   };
-}
+} // namespace tampio
 
 #endif
