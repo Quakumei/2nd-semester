@@ -2,11 +2,12 @@
 #define DICTIONARY_H
 
 #include <utility>
+
 #include "ForwardList.hpp"
 
 namespace tampio
 {
-  template < typename Key, typename Value, typename Compare >
+  template< typename Key, typename Value, typename Compare >
   class Dictionary
   {
   public:
@@ -17,6 +18,6 @@ namespace tampio
   private:
     ForwardList< std::pair< Key, Value > > listData_;
   };
-} // namespace tampio
+}
 
 #endif

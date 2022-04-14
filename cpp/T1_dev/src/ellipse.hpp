@@ -5,17 +5,17 @@
 
 namespace tampio
 {
-    class Ellipse : public Shape
-    {
-    public:
-        Ellipse(double radx, double rady, const point_t &center);
-        double getArea() const;
+  class Ellipse : public Shape
+  {
+  public:
+    Ellipse(double radx, double rady, const point_t &center);
+    double getArea() const;
 
-    private:
-        void scaleParameters(const point_t &center, double factor);
-        double radx_, rady_;
-        point_t center_;
-    };
+  private:
+    void scaleParameters(const point_t &center, double factor);
+    double radx_, rady_;
+    point_t center_;
+  };
 }
 
 #endif

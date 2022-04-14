@@ -1,6 +1,6 @@
 main: out/main.exe
 	out/main.exe
-test-containers: out/test-containers.out
+test-containers: out/test-containers.exe
 	out/test-containers.exe
 
 out/main.exe: out/main.o out/ExprCalc.a
@@ -17,7 +17,6 @@ out/Tokenize.o: src/Tokenize.cpp
 
 out/ExpressionCalculator.o: src/ExpressionCalculator.cpp 
 	g++ -c $< -o $@
-
 
 
 out/test-containers.exe: test/test-containers.cpp src/Stack.hpp src/Queue.hpp src/List.hpp 
