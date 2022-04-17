@@ -26,3 +26,9 @@ tampio::Rectangle::Rectangle(const rectangle_t &rect) :
 {
   frame_ = rect;
 }
+
+std::ostream &tampio::operator<<(std::ostream &os, const tampio::Rectangle &obj)
+{
+  os << obj.a_.x << " " << obj.a_.y << " " << obj.b_.x << " " << obj.b_.y;
+  return os;
+}

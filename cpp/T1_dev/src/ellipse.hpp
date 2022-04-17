@@ -12,10 +12,10 @@ namespace tampio
     double getArea() const;
 
   private:
-    void scaleParameters(const point_t &center, double factor);
     double radx_, rady_;
     point_t center_;
+    void scaleParameters(const point_t &center, double factor);
   };
-} // namespace tampio
+}
 
 #endif
