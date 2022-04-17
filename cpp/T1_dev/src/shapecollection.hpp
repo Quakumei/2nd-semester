@@ -19,6 +19,7 @@ namespace tampio
     friend std::ostream& operator<<(std::ostream&, const ShapeCollection< U >&);
     void appendElement(const T&);
     void scale(const point_t& center, double factor);
+    bool isEmpty() const;
 
   private:
     const int EXTEND_FACTOR = 2;
@@ -42,6 +43,12 @@ namespace tampio
     }
     return os;
   }
+}
+
+template< class T >
+bool tampio::ShapeCollection< T >::isEmpty() const
+{
+  return size_ == 0;
 }
 
 template< class T >

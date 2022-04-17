@@ -94,6 +94,12 @@ int main()
     sc.appendElement(fig);
   }
 
+  if (sc.isEmpty())
+  {
+    std::cerr << "Error: nothing to scale.";
+    return 1;
+  }
+
   std::cout.setf(std::ios::fixed);
   std::cout.precision(1);
   std::cout << sc << "\n";
