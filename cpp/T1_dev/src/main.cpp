@@ -8,7 +8,7 @@
 #include "shape.hpp"
 #include "shapecollection.hpp"
 
-#define DEBUG
+// #define DEBUG
 
 using namespace tampio;
 
@@ -36,7 +36,6 @@ int main()
   ShapeCollection< std::shared_ptr< Shape > > sc;
   bool unknownFigure = false;
   bool badKnownFigure = false;
-  double totalArea = 0;
 
   std::string cmd = "";
   while (std::cin >> cmd && !std::cin.eof() && cmd != "SCALE")

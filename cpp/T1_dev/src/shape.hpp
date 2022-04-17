@@ -1,6 +1,8 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
+#include <ostream>
+
 #include "base-types.hpp"
 
 namespace tampio
