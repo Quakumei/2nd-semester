@@ -8,6 +8,8 @@
 #include "shape.hpp"
 #include "shapecollection.hpp"
 
+#define DEBUG
+
 using namespace tampio;
 
 Shape::ShapeType stringToShapeType(const std::string &s)
@@ -52,7 +54,7 @@ int main()
         double rady, radx, x, y;
         std::cin >> x >> y >> rady >> radx;
         point_t center = point_t(x, y);
-        fig = std::make_unique< Ellipse >(radx, rady, center);
+        fig = std::make_shared< Ellipse >(radx, rady, center);
         break;
       }
       case Shape::ShapeType::CIRCLE:
@@ -60,7 +62,7 @@ int main()
         double rad, x, y;
         std::cin >> x >> y >> rad;
         point_t center = point_t(x, y);
-        fig = std::make_unique< Circle >(rad, center);
+        fig = std::make_shared< Circle >(rad, center);
         break;
       }
       case Shape::ShapeType::RECTANGLE:
@@ -69,17 +71,23 @@ int main()
         std::cin >> x1 >> y1 >> x2 >> y2;
         point_t a = point_t(x1, y1);
         point_t b = point_t(x2, y2);
-        fig = std::make_unique< Rectangle >(a, b);
+        fig = std::make_shared< Rectangle >(a, b);
         break;
       }
       }
     } catch (const std::logic_error &e)
     {
+#ifdef DEBUG
+      std::cerr << "\nhit: bad argument\n";
+#endif
       badKnownFigure = true;
       continue;
     }
     if (!fig)
     {
+#ifdef DEBUG
+      std::cerr << "hit: bad figure\n";
+#endif
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
       unknownFigure = true;
       continue;
@@ -89,7 +97,7 @@ int main()
 
   std::cout.setf(std::ios::fixed);
   std::cout.precision(1);
-  std::cout << sc << '\n';
+  std::cout << sc << "\n";
 
   try
   {
@@ -100,13 +108,13 @@ int main()
     double x, y, factor;
     std::cin >> x >> y >> factor;
     sc.scale(point_t(x, y), factor);
+    std::cout << sc << "\n";
   } catch (const std::logic_error &e)
   {
     std::cerr << "Scaling error: " << e.what() << std::endl;
     return 1;
   }
 
-  std::cout << sc << '\n';
   if (unknownFigure)
   {
     std::cerr << "BAD FIGURES OCCURED, SKIPPED.\n";

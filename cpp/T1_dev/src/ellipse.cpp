@@ -18,7 +18,7 @@ void tampio::Ellipse::scaleParameters(const point_t &center, double factor)
 tampio::Ellipse::Ellipse(double radx, double rady, const point_t &center) :
     center_(center)
 {
-  if (radx > 0 || rady > 0)
+  if (radx <= 0 || rady <= 0)
   {
     throw std::logic_error("Ellipse radiuses must be bigger than 0");
   }

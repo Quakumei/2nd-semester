@@ -4,6 +4,9 @@
 
 #include "rectangle.hpp"
 
+// Debug
+#include <iostream>
+
 void tampio::Shape::move(const tampio::point_t &new_pos)
 {
   frame_.pos = new_pos;
@@ -23,7 +26,7 @@ void tampio::Shape::scaleFrame(const point_t &center, double factor)
 
 void tampio::Shape::scale(const point_t &center, double factor)
 {
-  if (factor > 0)
+  if (factor < 0)
   {
     throw std::logic_error("Scale factor must be positive.");
   }

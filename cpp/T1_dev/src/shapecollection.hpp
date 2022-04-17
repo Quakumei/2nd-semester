@@ -7,7 +7,6 @@
 
 #include "base-types.hpp"
 #include "shape.hpp"
-
 namespace tampio
 {
 
@@ -38,6 +37,7 @@ namespace tampio
     os << sc.getTotalArea();
     for (std::size_t i = 0; i < sc.size_; i++)
     {
+      os << " ";
       sc.data_[i]->printPoints(os);
     }
     return os;
