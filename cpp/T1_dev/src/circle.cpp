@@ -17,7 +17,7 @@ void tampio::Circle::scaleParameters(const point_t &center, double factor)
 tampio::Circle::Circle(double rad, const point_t &center) :
     center_(center)
 {
-  if (rad > 0)
+  if (rad < 0)
   {
     throw std::logic_error("Circle radius must be bigger than 0");
   }
