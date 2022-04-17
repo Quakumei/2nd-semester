@@ -54,7 +54,7 @@ int main()
         double rady, radx, x, y;
         std::cin >> x >> y >> rady >> radx;
         point_t center = point_t(x, y);
-        fig = std::make_shared< Ellipse >(radx, rady, center);
+        fig = std::make_shared< Ellipse >(rady, radx, center);
         break;
       }
       case Shape::ShapeType::CIRCLE:

@@ -1,6 +1,5 @@
 #include <cmath>
 #include <iomanip>
-#include <iostream>
 #include <stdexcept>
 
 #include "ellipse.hpp"
@@ -15,7 +14,7 @@ void tampio::Ellipse::scaleParameters(const point_t &center, double factor)
   rady_ *= factor;
   center_ = center_ + (center_ - center) * factor;
 }
-tampio::Ellipse::Ellipse(double radx, double rady, const point_t &center) :
+tampio::Ellipse::Ellipse(double rady, double radx, const point_t &center) :
     center_(center)
 {
   if (radx <= 0 || rady <= 0)

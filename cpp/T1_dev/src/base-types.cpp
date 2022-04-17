@@ -12,12 +12,12 @@ tampio::point_t::point_t() :
 
 tampio::point_t tampio::operator+(tampio::point_t const &lhs, tampio::point_t const &rhs)
 {
-  return tampio::point_t(lhs.x + rhs.x, lhs.x + rhs.y);
+  return tampio::point_t(lhs.x + rhs.x, lhs.y + rhs.y);
 }
 
 tampio::point_t tampio::operator-(tampio::point_t const &lhs, tampio::point_t const &rhs)
 {
-  return tampio::point_t(lhs.x - rhs.x, lhs.x - rhs.y);
+  return tampio::point_t(lhs.x - rhs.x, lhs.y - rhs.y);
 }
 
 tampio::point_t tampio::operator*(tampio::point_t const &lhs, double factor)

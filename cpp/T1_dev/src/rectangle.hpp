@@ -15,7 +15,7 @@ namespace tampio
     double getArea() const;
     friend std::ostream &operator<<(std::ostream &os, const Rectangle &obj)
     {
-      os << obj.a_.y << " " << obj.a_.x << " " << obj.b_.y << " " << obj.b_.x;
+      os << obj.a_.x << " " << obj.a_.y << " " << obj.b_.x << " " << obj.b_.y;
       return os;
     }
 
