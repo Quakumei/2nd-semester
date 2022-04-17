@@ -4,9 +4,6 @@
 
 #include "rectangle.hpp"
 
-// Debug
-#include <iostream>
-
 void tampio::Shape::move(const tampio::point_t &new_pos)
 {
   frame_.pos = new_pos;
@@ -39,7 +36,6 @@ tampio::rectangle_t tampio::Shape::getFrameRect() const
   return frame_;
 }
 
-//    void printPoints(std::ostream&) const;
 void tampio::Shape::printPoints(std::ostream &os) const
 {
   tampio::Rectangle rectangle(frame_);

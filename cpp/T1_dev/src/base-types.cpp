@@ -35,7 +35,7 @@ tampio::rectangle_t::rectangle_t() :
     height(0),
     pos(point_t(0, 0))
 {}
-tampio::rectangle_t::rectangle_t(double w_new, double h_new, point_t pos_new) :
+tampio::rectangle_t::rectangle_t(double w_new, double h_new, const point_t &pos_new) :
     width(w_new),
     height(h_new),
     pos(pos_new)

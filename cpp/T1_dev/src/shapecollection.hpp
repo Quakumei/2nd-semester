@@ -56,7 +56,7 @@ void tampio::ShapeCollection< T >::scale(const point_t& center, double factor)
 {
   if (factor < 0)
   {
-    throw std::logic_error("Scaling factor must be positive");
+    throw std::logic_error("Scale factor must be positive");
   }
   for (std::size_t i = 0; i < size_; i++)
   {

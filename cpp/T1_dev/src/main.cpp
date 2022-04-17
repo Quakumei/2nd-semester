@@ -5,10 +5,7 @@
 #include "circle.hpp"
 #include "ellipse.hpp"
 #include "rectangle.hpp"
-#include "shape.hpp"
 #include "shapecollection.hpp"
-
-// #define DEBUG
 
 using namespace tampio;
 
@@ -76,17 +73,11 @@ int main()
       }
     } catch (const std::logic_error &e)
     {
-#ifdef DEBUG
-      std::cerr << "\nhit: bad argument\n";
-#endif
       badKnownFigure = true;
       continue;
     }
     if (!fig)
     {
-#ifdef DEBUG
-      std::cerr << "hit: bad figure\n";
-#endif
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
       unknownFigure = true;
       continue;

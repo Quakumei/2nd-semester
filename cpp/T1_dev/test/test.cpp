@@ -12,7 +12,5 @@ TEST_CASE("Basic assert", "[sanity]")
   REQUIRE(1 == 1);
 
   ShapeCollection< std::shared_ptr< Shape > > sc;
-
   std::shared_ptr< Shape > fig = nullptr;
-
 }

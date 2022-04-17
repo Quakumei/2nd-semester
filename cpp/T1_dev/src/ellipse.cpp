@@ -1,5 +1,3 @@
-#include <cmath>
-#include <iomanip>
 #include <stdexcept>
 
 #include "ellipse.hpp"

@@ -5,6 +5,8 @@
 
 #include "base-types.hpp"
 
+#define M_PI 3.1415
+
 namespace tampio
 {
   class Shape
@@ -34,5 +36,5 @@ namespace tampio
   private:
     void scaleFrame(const point_t &center, double factor);
   };
-} // namespace tampio
+}
 #endif

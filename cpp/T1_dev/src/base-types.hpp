@@ -13,7 +13,7 @@ namespace tampio
   struct rectangle_t
   {
     rectangle_t();
-    rectangle_t(double w_new, double h_new, point_t pos_new);
+    rectangle_t(double w_new, double h_new, const point_t &pos_new);
     double width, height;
     point_t pos;
   };
@@ -22,5 +22,5 @@ namespace tampio
   point_t operator-(point_t const &lhs, point_t const &rhs);
   point_t operator*(point_t const &lhs, double factor);
   point_t operator/(point_t const &lhs, double factor);
-} // namespace tampio
+}
 #endif
