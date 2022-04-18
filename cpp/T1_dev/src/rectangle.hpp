@@ -2,7 +2,6 @@
 #define RECTANGLE_H
 
 #include <ostream>
-
 #include "shape.hpp"
 
 namespace tampio
@@ -14,6 +13,9 @@ namespace tampio
     Rectangle(const rectangle_t &rect);
     friend std::ostream &operator<<(std::ostream &os, const Rectangle &obj);
     double getArea() const;
+    rectangle_t getFrameRect() const;
+    void move(const tampio::point_t &new_pos);
+    void move(double dx, double dy);
 
   private:
     point_t a_, b_;

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <limits>
 #include <memory>
-
 #include "circle.hpp"
 #include "ellipse.hpp"
 #include "rectangle.hpp"
@@ -111,13 +110,9 @@ int main()
     return 1;
   }
 
-  if (unknownFigure)
+  if (unknownFigure || badKnownFigure)
   {
-    std::cerr << "BAD FIGURES OCCURED, SKIPPED.\n";
-  }
-  if (badKnownFigure)
-  {
-    std::cerr << "BAD SHAPE ARGUMENTS, SKIPPED.\n";
+    std::cerr << "BAD INPUT, SKIPPED.\n";
   }
   return 0;
 }

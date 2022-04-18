@@ -4,7 +4,6 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-
 #include "base-types.hpp"
 #include "shape.hpp"
 namespace tampio
@@ -22,7 +21,7 @@ namespace tampio
     bool isEmpty() const;
 
   private:
-    const int EXTEND_FACTOR = 2;
+    const int EXTEND_FACTOR = 1.618; // Golden ratio
     std::size_t size_;
     std::size_t capacity_;
     std::shared_ptr< T[] > data_;
