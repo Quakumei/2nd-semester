@@ -3,7 +3,7 @@
 
 #include <utility>
 
-#include "ForwardList.hpp"
+#include "List.hpp"
 
 namespace tampio
 {
@@ -12,8 +12,8 @@ namespace tampio
   {
   public:
     void push(Key k, Value v);
-    Value get(Key k);
-    Value drop(Key k);
+    Value get(Key k) const;
+    void drop(Key k);
 
   private:
     ForwardList< std::pair< Key, Value > > listData_;

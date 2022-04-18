@@ -6,7 +6,7 @@ run_main: out/main.exe
 run_test: out/test.exe
 	out/test.exe
 
-out/test.exe: test/tests.cpp
+out/test.exe: test/tests.cpp 
 	g++ $^ -o $@
 
 out/main.exe: out/main.cpp

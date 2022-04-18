@@ -2,6 +2,7 @@
 #define LIST_H
 
 #include <iostream>
+
 namespace tampio
 {
   template< class T >
@@ -157,4 +158,8 @@ void tampio::List< T >::swap(List &list) noexcept
   std::swap(head_, list.head_);
   std::swap(tail_, list.tail_);
 }
+
+template< class T >
+using ForwardList = tampio::List< T >;
+
 #endif

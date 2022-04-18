@@ -2,64 +2,53 @@
 #define LIST_H
 
 #include <iostream>
-
-#include "ForwardListIterator.hpp"
-
 namespace tampio
 {
   template< class T >
   class List
   {
-  private:
-    struct node_t;
-
-  public:
-    using ValueType = T;
-    using StructType = node_t;
-    using Iterator = ForwardListIterator< List< T > >;
-
   public:
     List();
     ~List();
-    List(const List &);
-    List(List &&) noexcept;
-    List &operator=(const List &);
-    List &operator=(List &&) noexcept;
+    List(const List&);
+    List(List&&) noexcept;
+    List& operator=(const List&);
+    List& operator=(List&&) noexcept;
 
-    Iterator begin() const;
-    Iterator end() const;
+    void pushTail(const T&);
+    void pushHead(const T&);
 
-    void pushTail(const T &);
-    void pushHead(const T &);
+    T dropHead();
 
     // По аналогии с std::vector
-    void rmFront();
+    void rm_back();
     T top() const;
     T bottom() const;
+
     bool isEmpty() const noexcept;
 
   private:
     struct node_t
     {
       T data;
-      node_t *next;
+      node_t* next;
     };
 
-    void swap(List &) noexcept;
+    void swap(List&) noexcept;
 
-    node_t *head_;
-    node_t *tail_;
+    node_t* head_;
+    node_t* tail_;
   };
 }
 
 template< class T >
-void tampio::List< T >::rmFront()
+void tampio::List< T >::rm_back()
 {
   if (!head_)
   {
     throw std::logic_error("List is empty");
   }
-  node_t *temp = head_;
+  node_t* temp = head_;
   head_ = (head_ == tail_) ? tail_ = nullptr : head_->next;
   delete temp;
 }
@@ -68,9 +57,22 @@ T tampio::List< T >::top() const
 {
   return head_->data;
 }
+template< class T >
+T tampio::List< T >::dropHead()
+{
+  if (!head_)
+  {
+    throw std::logic_error("List is empty");
+  }
+  T res = head_->data;
+  node_t* temp = head_;
+  head_ = (head_ == tail_) ? tail_ = nullptr : head_->next;
+  delete temp;
+  return res;
+}
 
 template< class T >
-void tampio::List< T >::pushTail(const T &d)
+void tampio::List< T >::pushTail(const T& d)
 {
   if (!head_)
   {
@@ -84,9 +86,9 @@ void tampio::List< T >::pushTail(const T &d)
   tail_->next = nullptr;
 }
 template< class T >
-void tampio::List< T >::pushHead(const T &val)
+void tampio::List< T >::pushHead(const T& val)
 {
-  node_t *newNode = new node_t;
+  node_t* newNode = new node_t;
   newNode->data = val;
   newNode->next = head_;
   head_ = newNode;
@@ -105,12 +107,12 @@ tampio::List< T >::List() :
 {}
 
 template< class T >
-tampio::List< T >::List(const List &list) :
+tampio::List< T >::List(const List& list) :
     head_(nullptr),
     tail_(nullptr)
 {
   tampio::List< T > temp;
-  node_t *src = list.head_;
+  node_t* src = list.head_;
   while (src)
   {
     temp.pushTail(src->data);
@@ -120,7 +122,7 @@ tampio::List< T >::List(const List &list) :
 }
 
 template< class T >
-tampio::List< T >::List(List &&list) noexcept :
+tampio::List< T >::List(List&& list) noexcept :
     head_(nullptr),
     tail_(nullptr)
 {
@@ -132,14 +134,14 @@ tampio::List< T >::~List()
 {
   while (head_)
   {
-    node_t *temp = head_;
+    node_t* temp = head_;
     head_ = head_->next;
     delete temp;
   }
 }
 
 template< class T >
-tampio::List< T > &tampio::List< T >::operator=(const List &list)
+tampio::List< T >& tampio::List< T >::operator=(const List& list)
 {
   if (this == &list)
   {
@@ -153,7 +155,7 @@ tampio::List< T > &tampio::List< T >::operator=(const List &list)
 }
 
 template< class T >
-tampio::List< T > &tampio::List< T >::operator=(List &&list) noexcept
+tampio::List< T >& tampio::List< T >::operator=(List&& list) noexcept
 {
   swap(list);
   return *this;
@@ -166,26 +168,9 @@ bool tampio::List< T >::isEmpty() const noexcept
 }
 
 template< class T >
-void tampio::List< T >::swap(List &list) noexcept
+void tampio::List< T >::swap(List& list) noexcept
 {
   std::swap(head_, list.head_);
   std::swap(tail_, list.tail_);
 }
-
-// Iterator patch
-template< class T >
-using ForwardList = tampio::List< T >;
-
-template< class T >
-typename tampio::List< T >::Iterator tampio::List< T >::begin() const
-{
-  return tampio::List< T >::Iterator(head_);
-}
-
-template< class T >
-typename tampio::List< T >::Iterator tampio::List< T >::end() const
-{
-  return tampio::List< T >::Iterator(tail_);
-}
-
 #endif
