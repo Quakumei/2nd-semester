@@ -21,5 +21,5 @@ tampio::Ellipse::Ellipse(double rady, double radx, const point_t &center) :
   }
   radx_ = radx;
   rady_ = rady;
-  frame_ = rectangle_t(radx * 2, rady * 2, center);
+  frame_ = rectangle_t{radx * 2, rady * 2, center};
 }

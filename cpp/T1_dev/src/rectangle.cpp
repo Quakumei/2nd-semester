@@ -18,11 +18,11 @@ tampio::Rectangle::Rectangle(const point_t &a, const point_t &b)
   }
   a_ = a;
   b_ = b;
-  frame_ = rectangle_t(b.x - a.x, b.y - a.y, a + (b - a) / 2);
+  frame_ = rectangle_t{b.x - a.x, b.y - a.y, a + (b - a) / 2};
 }
 tampio::Rectangle::Rectangle(const rectangle_t &rect) :
-    a_(rect.pos - point_t(rect.width / 2, rect.height / 2)),
-    b_(rect.pos + point_t(rect.width / 2, rect.height / 2))
+    a_(rect.pos - point_t{rect.width / 2, rect.height / 2}),
+    b_(rect.pos + point_t{rect.width / 2, rect.height / 2})
 {
   frame_ = rect;
 }

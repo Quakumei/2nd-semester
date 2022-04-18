@@ -11,7 +11,7 @@ void tampio::Shape::move(const tampio::point_t &new_pos)
 
 void tampio::Shape::move(double dx, double dy)
 {
-  frame_.pos = point_t(frame_.pos.x + dx, frame_.pos.y + dy);
+  frame_.pos = point_t{frame_.pos.x + dx, frame_.pos.y + dy};
 }
 
 void tampio::Shape::scaleFrame(const point_t &center, double factor)

@@ -19,5 +19,5 @@ tampio::Circle::Circle(double rad, const point_t &center) :
     throw std::logic_error("Circle radius must be bigger than 0");
   }
   rad_ = rad;
-  frame_ = rectangle_t(rad * 2, rad * 2, center);
+  frame_ = rectangle_t{rad * 2, rad * 2, center};
 }

@@ -49,7 +49,7 @@ int main()
       {
         double rady, radx, x, y;
         std::cin >> x >> y >> rady >> radx;
-        point_t center = point_t(x, y);
+        point_t center = point_t{x, y};
         fig = std::make_shared< Ellipse >(rady, radx, center);
         break;
       }
@@ -57,7 +57,7 @@ int main()
       {
         double rad, x, y;
         std::cin >> x >> y >> rad;
-        point_t center = point_t(x, y);
+        point_t center = point_t{x, y};
         fig = std::make_shared< Circle >(rad, center);
         break;
       }
@@ -65,8 +65,8 @@ int main()
       {
         double x1, y1, x2, y2;
         std::cin >> x1 >> y1 >> x2 >> y2;
-        point_t a = point_t(x1, y1);
-        point_t b = point_t(x2, y2);
+        point_t a = point_t{x1, y1};
+        point_t b = point_t{x2, y2};
         fig = std::make_shared< Rectangle >(a, b);
         break;
       }
@@ -103,7 +103,7 @@ int main()
     }
     double x, y, factor;
     std::cin >> x >> y >> factor;
-    sc.scale(point_t(x, y), factor);
+    sc.scale(point_t{x, y}, factor);
     std::cout << sc << "\n";
   } catch (const std::logic_error &e)
   {
