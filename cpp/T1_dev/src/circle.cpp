@@ -3,7 +3,7 @@
 
 double tampio::Circle::getArea() const
 {
-  return M_PI * rad_ * rad_;
+  return M_PI * rad_ * rad_; // S = pi * R^2
 }
 void tampio::Circle::scaleParameters(const point_t &center, double factor)
 {
@@ -18,14 +18,5 @@ tampio::Circle::Circle(double rad, const point_t &center) :
     throw std::logic_error("Circle radius must be bigger than 0");
   }
   rad_ = rad;
-}
-
-tampio::rectangle_t tampio::Circle::getFrameRect() const
-{
-  return rectangle_t{rad_ * 2, rad_ * 2, center_};
-}
-
-void tampio::Circle::move(const tampio::point_t &new_pos)
-{
-  center_ = new_pos;
+  frame_ = rectangle_t{rad * 2, rad * 2, center};
 }

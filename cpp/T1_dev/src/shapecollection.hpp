@@ -21,7 +21,7 @@ namespace tampio
     bool isEmpty() const;
 
   private:
-    const int EXTEND_FACTOR = 1.618; // Golden ratio
+    const int EXTEND_FACTOR = 2;
     std::size_t size_;
     std::size_t capacity_;
     std::shared_ptr< T[] > data_;

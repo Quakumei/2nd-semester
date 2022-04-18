@@ -3,8 +3,7 @@
 
 double tampio::Rectangle::getArea() const
 {
-  rectangle_t frame = getFrameRect();
-  return frame.height * frame.width;
+  return frame_.height * frame_.width; // S = a * b
 }
 void tampio::Rectangle::scaleParameters(const point_t &center, double factor)
 {
@@ -19,30 +18,17 @@ tampio::Rectangle::Rectangle(const point_t &a, const point_t &b)
   }
   a_ = a;
   b_ = b;
+  frame_ = rectangle_t{b.x - a.x, b.y - a.y, a + (b - a) / 2};
 }
 tampio::Rectangle::Rectangle(const rectangle_t &rect) :
     a_(rect.pos - point_t{rect.width / 2, rect.height / 2}),
     b_(rect.pos + point_t{rect.width / 2, rect.height / 2})
-{}
+{
+  frame_ = rect;
+}
 
 std::ostream &tampio::operator<<(std::ostream &os, const tampio::Rectangle &obj)
 {
   os << obj.a_.x << " " << obj.a_.y << " " << obj.b_.x << " " << obj.b_.y;
   return os;
-}
-
-tampio::rectangle_t tampio::Rectangle::getFrameRect() const
-{
-  return rectangle_t{b_.x - a_.x, b_.y - a_.y, a_ + (b_ - a_) / 2};
-}
-
-void tampio::Rectangle::move(const tampio::point_t &new_pos)
-{
-  rectangle_t frame = getFrameRect();
-  *this = Rectangle(rectangle_t{frame.width, frame.height, new_pos});
-}
-
-void tampio::Rectangle::move(double dx, double dy)
-{
-  move(getFrameRect().pos + point_t{dx, dy});
 }
