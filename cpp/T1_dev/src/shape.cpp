@@ -15,8 +15,3 @@ void tampio::Shape::scale(double factor)
   }
   scaleParameters(factor);
 }
-
-void tampio::Shape::printPoints(std::ostream &os) const
-{
-  os << Rectangle(getFrameRect());
-}

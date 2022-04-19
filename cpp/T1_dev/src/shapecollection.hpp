@@ -5,6 +5,7 @@
 #include <memory>
 #include <stdexcept>
 #include "base-types.hpp"
+#include "rectangle.hpp"
 #include "shape.hpp"
 namespace tampio
 {
@@ -38,7 +39,7 @@ namespace tampio
     for (std::size_t i = 0; i < sc.size_; i++)
     {
       os << " ";
-      sc.data_[i]->printPoints(os);
+      os << Rectangle(sc.data_[i]->getFrameRect());
     }
     return os;
   }

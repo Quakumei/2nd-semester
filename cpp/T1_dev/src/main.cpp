@@ -8,25 +8,6 @@
 
 using namespace tampio;
 
-Shape::ShapeType stringToShapeType(const std::string &s)
-{
-  Shape::ShapeType st;
-  if (s == "RECTANGLE")
-  {
-    st = Shape::ShapeType::RECTANGLE;
-  } else if (s == "CIRCLE")
-  {
-    st = Shape::ShapeType::CIRCLE;
-  } else if (s == "ELLIPSE")
-  {
-    st = Shape::ShapeType::ELLIPSE;
-  } else
-  {
-    st = Shape::ShapeType::UNKNOWN;
-  }
-  return st;
-}
-
 int main()
 {
   ShapeCollection< std::shared_ptr< Shape > > sc;
@@ -36,39 +17,28 @@ int main()
   std::string cmd = "";
   while (std::cin >> cmd && !std::cin.eof() && cmd != "SCALE")
   {
-    Shape::ShapeType st = stringToShapeType(cmd);
     std::shared_ptr< Shape > fig = nullptr;
     try
     {
-      switch (st)
-      {
-      case Shape::ShapeType::UNKNOWN:
-        break;
-      case Shape::ShapeType::ELLIPSE:
-      {
-        double rady, radx, x, y;
-        std::cin >> x >> y >> rady >> radx;
-        point_t center = point_t{x, y};
-        fig = std::make_shared< Ellipse >(rady, radx, center);
-        break;
-      }
-      case Shape::ShapeType::CIRCLE:
-      {
-        double rad, x, y;
-        std::cin >> x >> y >> rad;
-        point_t center = point_t{x, y};
-        fig = std::make_shared< Circle >(rad, center);
-        break;
-      }
-      case Shape::ShapeType::RECTANGLE:
+      if (cmd == "RECTANGLE")
       {
         double x1, y1, x2, y2;
         std::cin >> x1 >> y1 >> x2 >> y2;
         point_t a = point_t{x1, y1};
         point_t b = point_t{x2, y2};
         fig = std::make_shared< Rectangle >(a, b);
-        break;
-      }
+      } else if (cmd == "CIRCLE")
+      {
+        double rad, x, y;
+        std::cin >> x >> y >> rad;
+        point_t center = point_t{x, y};
+        fig = std::make_shared< Circle >(rad, center);
+      } else if (cmd == "ELLIPSE")
+      {
+        double rady, radx, x, y;
+        std::cin >> x >> y >> rady >> radx;
+        point_t center = point_t{x, y};
+        fig = std::make_shared< Ellipse >(rady, radx, center);
       }
     } catch (const std::logic_error &e)
     {
