@@ -61,7 +61,7 @@ void tampio::ShapeCollection< T >::scale(const point_t& center, double factor)
   {
     data_[i]->scale(factor);
     point_t center_ = data_[i]->getFrameRect().pos;
-    data_[i]->move(center_ + (center_ - center) * factor);
+    data_[i]->move(center_ + (center_ - center) * factor / 2);
   }
 }
 
