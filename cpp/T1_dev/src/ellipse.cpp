@@ -3,7 +3,7 @@
 
 double tampio::Ellipse::getArea() const
 {
-  return M_PI * radx_ * rady_; // S = pi * ry * rx;
+  return M_PI * radx_ * rady_;
 }
 void tampio::Ellipse::scaleParameters(const point_t &center, double factor)
 {

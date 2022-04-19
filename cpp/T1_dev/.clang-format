@@ -8,7 +8,7 @@ AlwaysBreakTemplateDeclarations: Yes
 FixNamespaceComments: false
 IncludeBlocks: Merge
 NamespaceIndentation: All
-IncludeBlocks: Regroup
+# IncludeBlocks: Regroup
 
 #
 AllowAllParametersOfDeclarationOnNextLine: false

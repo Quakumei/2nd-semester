@@ -3,7 +3,7 @@
 
 double tampio::Rectangle::getArea() const
 {
-  return frame_.height * frame_.width; // S = a * b
+  return frame_.height * frame_.width;
 }
 void tampio::Rectangle::scaleParameters(const point_t &center, double factor)
 {

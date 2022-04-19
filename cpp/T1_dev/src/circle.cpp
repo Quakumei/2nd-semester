@@ -3,7 +3,7 @@
 
 double tampio::Circle::getArea() const
 {
-  return M_PI * rad_ * rad_; // S = pi * R^2
+  return M_PI * rad_ * rad_;
 }
 void tampio::Circle::scaleParameters(const point_t &center, double factor)
 {
