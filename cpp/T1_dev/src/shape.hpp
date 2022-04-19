@@ -19,7 +19,7 @@ namespace tampio
       ELLIPSE
     };
 
-    Shape(){};
+    Shape() = default;
     virtual ~Shape() = default;
     virtual double getArea() const = 0;
     rectangle_t getFrameRect() const;
