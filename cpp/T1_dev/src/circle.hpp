@@ -10,6 +10,7 @@ namespace tampio
   public:
     Circle(double rad, const point_t &center);
     double getArea() const;
+    rectangle_t getFrameRect() const;
 
   private:
     double rad_;

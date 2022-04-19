@@ -22,7 +22,7 @@ namespace tampio
     Shape() = default;
     virtual ~Shape() = default;
     virtual double getArea() const = 0;
-    rectangle_t getFrameRect() const;
+    virtual rectangle_t getFrameRect() const;
     void move(const point_t &p);
     void move(double dx, double dy);
     void scale(const point_t &center, double factor);

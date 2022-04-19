@@ -11,8 +11,7 @@ void tampio::Ellipse::scaleParameters(const point_t &center, double factor)
   rady_ *= factor;
   center_ = center_ + (center_ - center) * factor;
 }
-tampio::Ellipse::Ellipse(double rady, double radx, const point_t &center) :
-    center_(center)
+tampio::Ellipse::Ellipse(double rady, double radx, const point_t &center)
 {
   if (radx <= 0 || rady <= 0)
   {
@@ -20,5 +19,12 @@ tampio::Ellipse::Ellipse(double rady, double radx, const point_t &center) :
   }
   radx_ = radx;
   rady_ = rady;
-  frame_ = rectangle_t{radx * 2, rady * 2, center};
+  center_ = center;
+
+  frame_ = getFrameRect();
+}
+
+tampio::rectangle_t tampio::Ellipse::getFrameRect() const
+{
+  return rectangle_t{radx_ * 2, rady_ * 2, center_};
 }

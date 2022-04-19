@@ -10,6 +10,7 @@ namespace tampio
   public:
     Ellipse(double radx, double rady, const point_t &center);
     double getArea() const;
+    rectangle_t getFrameRect() const;
 
   private:
     double radx_, rady_;
