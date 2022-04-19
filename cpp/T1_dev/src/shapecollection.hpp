@@ -59,7 +59,9 @@ void tampio::ShapeCollection< T >::scale(const point_t& center, double factor)
   }
   for (std::size_t i = 0; i < size_; i++)
   {
-    data_[i]->scale(center, factor);
+    data_[i]->scale(factor);
+    point_t center_ = data_[i]->getFrameRect().pos;
+    data_[i]->move(center_ + (center_ - center) * factor);
   }
 }
 
@@ -86,13 +88,13 @@ void tampio::ShapeCollection< T >::appendElement(const T& elem)
 {
   if (size_ == capacity_)
   {
-    std::shared_ptr< T[] > temp(new T[static_cast< int >(capacity_ * EXTEND_FACTOR)]);
+    std::shared_ptr< T[] > temp(new T[static_cast< int >(capacity_ * EXTEND_FACTOR) + 1]);
     for (std::size_t i = 0; i < size_; i++)
     {
       temp[i] = data_[i];
     }
     data_.swap(temp);
-    capacity_ = static_cast< int >(capacity_ * EXTEND_FACTOR);
+    capacity_ = static_cast< int >(capacity_ * EXTEND_FACTOR) + 1;
   }
   data_[size_] = elem;
   ++size_;

@@ -25,7 +25,7 @@ tampio::Rectangle::Rectangle(const rectangle_t &rect) :
     a_(rect.pos - point_t{rect.width / 2, rect.height / 2}),
     b_(rect.pos + point_t{rect.width / 2, rect.height / 2})
 {
-  frame_ = rect;
+  frame_ = getFrameRect();
 }
 
 std::ostream &tampio::operator<<(std::ostream &os, const tampio::Rectangle &obj)
