@@ -14,6 +14,7 @@ namespace tampio
     friend std::ostream &operator<<(std::ostream &os, const Rectangle &obj);
     double getArea() const;
     rectangle_t getFrameRect() const;
+    void move(const point_t &p);
 
   private:
     point_t a_, b_;

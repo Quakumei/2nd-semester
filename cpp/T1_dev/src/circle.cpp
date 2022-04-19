@@ -18,10 +18,14 @@ tampio::Circle::Circle(double rad, const point_t &center)
   }
   rad_ = rad;
   center_ = center;
-  frame_ = getFrameRect();
 }
 
 tampio::rectangle_t tampio::Circle::getFrameRect() const
 {
   return rectangle_t{rad_ * 2, rad_ * 2, center_};
+}
+
+void tampio::Circle::move(const point_t &p)
+{
+  center_ = p;
 }

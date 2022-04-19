@@ -11,6 +11,7 @@ namespace tampio
     Circle(double rad, const point_t &center);
     double getArea() const;
     rectangle_t getFrameRect() const;
+    void move(const point_t &p);
 
   private:
     double rad_;

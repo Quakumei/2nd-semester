@@ -23,17 +23,15 @@ namespace tampio
     virtual ~Shape() = default;
     virtual double getArea() const = 0;
     virtual rectangle_t getFrameRect() const = 0;
-    void move(const point_t &p);
+    virtual void move(const point_t &p) = 0;
     void move(double dx, double dy);
     void scale(double factor);
     void printPoints(std::ostream &) const;
 
   protected:
     virtual void scaleParameters(const point_t &center, double factor) = 0;
-    rectangle_t frame_;
 
   private:
-    void scaleFrame(const point_t &center, double factor);
   };
 }
 #endif

@@ -20,11 +20,14 @@ tampio::Ellipse::Ellipse(double rady, double radx, const point_t &center)
   radx_ = radx;
   rady_ = rady;
   center_ = center;
-
-  frame_ = getFrameRect();
 }
 
 tampio::rectangle_t tampio::Ellipse::getFrameRect() const
 {
   return rectangle_t{radx_ * 2, rady_ * 2, center_};
+}
+
+void tampio::Ellipse::move(const point_t &p)
+{
+  center_ = p;
 }
