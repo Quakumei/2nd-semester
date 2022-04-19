@@ -8,70 +8,54 @@ namespace tampio
   {
   public:
     using StructType = typename ForwardList::StructType;
-    using StructPointerType = StructType*;
+    using StructPointerType = StructType *;
     using ValueType = typename ForwardList::ValueType;
-    using PointerType = ValueType*;
-    using ReferenceType = ValueType&;
+    using PointerType = ValueType *;
+    using ReferenceType = ValueType &;
 
   public:
     ForwardListIterator(StructPointerType ptr) :
-        mPtr_(ptr)
+        ptr_(ptr)
     {}
-    ForwardListIterator& operator++()
+    ForwardListIterator &operator++()
     {
-      // TODO:Rework
-      mPtr_ = mPtr_->next;
+      ptr_ = ptr_->next;
       return *this;
     }
     ForwardListIterator operator++(int)
     {
-      // TODO:Rework
       ForwardListIterator iterator = *this;
       ++(*this);
       return iterator;
     }
-    // ForwardListIterator& operator--()
-    // {
-    //   // TODO:Rework
-    //   mPtr_--;
-    //   return *this;
-    // }
-    // ForwardListIterator operator--(int)
-    // {
-    //   // TODO:Rework
-    //   ForwardListIterator iterator = *this;
-    //   --(*this);
-    //   return iterator;
-    // }
-
     ReferenceType operator[](int index)
     {
-      return *(mPtr_ + index);
+      return *(ptr_ + index);
     }
 
     PointerType operator->()
     {
-      return mPtr_;
+      return ptr_;
     }
 
     ReferenceType operator*()
     {
-      return mPtr_->data;
+      return ptr_->data;
     }
 
-    bool operator==(const ForwardListIterator& other) const
+    bool operator==(const ForwardListIterator &other) const
     {
-      return mPtr_ == other.mPtr_;
+      return ptr_ == other.ptr_;
     }
 
-    bool operator!=(const ForwardListIterator& other) const
+    bool operator!=(const ForwardListIterator &other) const
     {
       return !(*this == other);
     }
 
   private:
-    StructPointerType mPtr_;
+    StructPointerType ptr_;
   };
 
-}
+} // namespace tampio
 #endif

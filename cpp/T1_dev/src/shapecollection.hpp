@@ -21,7 +21,7 @@ namespace tampio
     bool isEmpty() const;
 
   private:
-    const int EXTEND_FACTOR = 2;
+    const double EXTEND_FACTOR = 1.618;
     std::size_t size_;
     std::size_t capacity_;
     std::shared_ptr< T[] > data_;
@@ -86,13 +86,13 @@ void tampio::ShapeCollection< T >::appendElement(const T& elem)
 {
   if (size_ == capacity_)
   {
-    std::shared_ptr< T[] > temp(new T[capacity_ * EXTEND_FACTOR]);
+    std::shared_ptr< T[] > temp(new T[static_cast< int >(capacity_ * EXTEND_FACTOR)]);
     for (std::size_t i = 0; i < size_; i++)
     {
       temp[i] = data_[i];
     }
     data_.swap(temp);
-    capacity_ = capacity_ * EXTEND_FACTOR;
+    capacity_ = static_cast< int >(capacity_ * EXTEND_FACTOR);
   }
   data_[size_] = elem;
   ++size_;
