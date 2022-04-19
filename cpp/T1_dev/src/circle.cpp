@@ -1,6 +1,6 @@
+#include <cmath>
 #include <stdexcept>
 #include "circle.hpp"
-
 double tampio::Circle::getArea() const
 {
   return M_PI * rad_ * rad_;

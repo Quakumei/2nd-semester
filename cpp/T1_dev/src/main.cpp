@@ -110,13 +110,9 @@ int main()
     return 1;
   }
 
-  if (unknownFigure)
+  if (unknownFigure || badKnownFigure)
   {
     std::cerr << "BAD FIGURES OCCURED, SKIPPED.\n";
-  }
-  if (badKnownFigure)
-  {
-    std::cerr << "BAD SHAPE ARGUMENTS, SKIPPED.\n";
   }
   return 0;
 }

@@ -4,8 +4,6 @@
 #include <ostream>
 #include "base-types.hpp"
 
-#define M_PI 3.1415
-
 namespace tampio
 {
   class Shape
