@@ -5,8 +5,9 @@ double tampio::Circle::getArea() const
 {
   return M_PI * rad_ * rad_;
 }
-void tampio::Circle::scaleParameters(const point_t &center, double factor)
+void tampio::Circle::scaleParameters(double factor)
 {
+  point_t center = getFrameRect().pos;
   rad_ *= factor;
   center_ = center_ + (center_ - center) * factor;
 }

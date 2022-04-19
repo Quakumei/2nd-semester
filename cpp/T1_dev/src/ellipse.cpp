@@ -5,8 +5,9 @@ double tampio::Ellipse::getArea() const
 {
   return M_PI * radx_ * rady_;
 }
-void tampio::Ellipse::scaleParameters(const point_t &center, double factor)
+void tampio::Ellipse::scaleParameters(double factor)
 {
+  point_t center = getFrameRect().pos;
   radx_ *= factor;
   rady_ *= factor;
   center_ = center_ + (center_ - center) * factor;

@@ -13,14 +13,8 @@ void tampio::Shape::scale(double factor)
   {
     throw std::logic_error("Scale factor must be positive.");
   }
-  point_t center = getFrameRect().pos;
-  scaleParameters(center, factor);
+  scaleParameters(factor);
 }
-
-// tampio::rectangle_t tampio::Shape::getFrameRect() const
-// {
-//   return frame_;
-// }
 
 void tampio::Shape::printPoints(std::ostream &os) const
 {

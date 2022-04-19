@@ -18,7 +18,7 @@ namespace tampio
 
   private:
     point_t a_, b_;
-    void scaleParameters(const point_t &center, double factor);
+    void scaleParameters(double factor);
   };
   std::ostream &operator<<(std::ostream &os, const tampio::Rectangle &obj);
 

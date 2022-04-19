@@ -29,9 +29,7 @@ namespace tampio
     void printPoints(std::ostream &) const;
 
   protected:
-    virtual void scaleParameters(const point_t &center, double factor) = 0;
-
-  private:
+    virtual void scaleParameters(double factor) = 0;
   };
 }
 #endif
