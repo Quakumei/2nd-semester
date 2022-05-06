@@ -1,9 +1,9 @@
 #ifndef FORWARDLIST_H
 #define FORWARDLIST_H
 
+#include <iostream>
 #include <stdexcept>
 #include <utility>
-
 namespace tampio
 {
   template< class T >
@@ -32,7 +32,7 @@ namespace tampio
     Iterator begin();
     Iterator end();
     Iterator beforeBegin();
-    Iterator insertAfter(Iterator, const T &);
+    Iterator insertAfter(const Iterator &, const T &);
 
   private:
     struct node_t
@@ -67,15 +67,15 @@ namespace tampio
 
   private:
     node_t *nodeptr_;
-
-    // friend ForwardList::node_t;
+    node_t *nextptr_;
+    friend ForwardList;
   };
 }
 
 template< class T >
 void tampio::ForwardList< T >::deleteFront()
 {
-  if (!head_)
+  if (empty())
   {
     throw std::logic_error("ForwardList is empty");
   }
@@ -90,9 +90,9 @@ T tampio::ForwardList< T >::front() const
 }
 
 template< class T >
-void tampio::ForwardList< T >::pushBack(const T &d)
+void tampio::ForwardList< T >::pushBack(const T &item)
 {
-  if (!head_)
+  if (empty())
   {
     head_ = tail_ = new node_t;
   }
@@ -101,7 +101,7 @@ void tampio::ForwardList< T >::pushBack(const T &d)
     tail_->next = new node_t;
     tail_ = tail_->next;
   }
-  tail_->data = d;
+  tail_->data = item;
   tail_->next = nullptr;
 }
 template< class T >
@@ -110,7 +110,14 @@ void tampio::ForwardList< T >::pushFront(const T &val)
   node_t *newNode = new node_t;
   newNode->data = val;
   newNode->next = head_;
-  head_ = newNode;
+  if (empty())
+  {
+    tail_ = head_ = newNode;
+  }
+  else
+  {
+    head_ = newNode;
+  }
 }
 
 template< class T >
@@ -127,12 +134,12 @@ tampio::ForwardList< T >::ForwardList() :
 }
 
 template< class T >
-tampio::ForwardList< T >::ForwardList(const ForwardList &ForwardList) :
+tampio::ForwardList< T >::ForwardList(const ForwardList &forwardList) :
     head_(nullptr),
     tail_(nullptr)
 {
   tampio::ForwardList< T > temp;
-  node_t *src = ForwardList.head_;
+  node_t *src = forwardList.head_;
   while (src)
   {
     temp.pushBack(src->data);
@@ -142,11 +149,11 @@ tampio::ForwardList< T >::ForwardList(const ForwardList &ForwardList) :
 }
 
 template< class T >
-tampio::ForwardList< T >::ForwardList(ForwardList &&ForwardList) noexcept :
+tampio::ForwardList< T >::ForwardList(ForwardList &&forwardList) noexcept :
     head_(nullptr),
     tail_(nullptr)
 {
-  swap(ForwardList);
+  swap(forwardList);
 }
 
 template< class T >
@@ -162,14 +169,14 @@ tampio::ForwardList< T >::~ForwardList()
 
 template< class T >
 tampio::ForwardList< T > &tampio::ForwardList< T >::operator=(
-    const ForwardList &ForwardList)
+    const ForwardList &forwardList)
 {
-  if (this == &ForwardList)
+  if (this == &forwardList)
   {
     return *this;
   }
 
-  tampio::ForwardList< T > tempForwardList(ForwardList);
+  tampio::ForwardList< T > tempForwardList(forwardList);
   swap(tempForwardList);
 
   return *this;
@@ -177,9 +184,9 @@ tampio::ForwardList< T > &tampio::ForwardList< T >::operator=(
 
 template< class T >
 tampio::ForwardList< T > &tampio::ForwardList< T >::operator=(
-    ForwardList &&ForwardList) noexcept
+    ForwardList &&forwardList) noexcept
 {
-  swap(ForwardList);
+  swap(forwardList);
   return *this;
 }
 
@@ -190,54 +197,61 @@ bool tampio::ForwardList< T >::empty() const noexcept
 }
 
 template< class T >
-void tampio::ForwardList< T >::swap(ForwardList &ForwardList) noexcept
+void tampio::ForwardList< T >::swap(ForwardList &forwardList) noexcept
 {
-  std::swap(head_, ForwardList.head_);
-  std::swap(tail_, ForwardList.tail_);
+  std::swap(head_, forwardList.head_);
+  std::swap(tail_, forwardList.tail_);
 }
 
 // Iterator
 template< class T >
 tampio::ForwardList< T >::Iterator::Iterator() :
-    nodeptr_(nullptr){};
+    nodeptr_(nullptr),
+    nextptr_(nullptr){};
 template< class T >
 tampio::ForwardList< T >::Iterator::Iterator(const Iterator &other) :
-    nodeptr_(other.nodeptr_){};
+    nodeptr_(other.nodeptr_),
+    nextptr_(other.nextptr_){};
 template< class T >
-tampio::ForwardList< T >::Iterator::Iterator(node_t *node) :
-    nodeptr_(node){};
+tampio::ForwardList< T >::Iterator::Iterator(node_t *node)
+{
+  nodeptr_ = (node);
+  nextptr_ = (node->next);
+};
 
 template< class T >
 typename tampio::ForwardList< T >::Iterator &
 tampio::ForwardList< T >::Iterator::operator=(const Iterator &other)
 {
   nodeptr_ = other.nodeptr_;
+  nextptr_ = other.nextptr_;
+  return *this;
 }
 
 template< class T >
 T &tampio::ForwardList< T >::Iterator::operator*()
 {
-  return nodeptr_;
+  return nodeptr_->data;
 }
 template< class T >
 const T &tampio::ForwardList< T >::Iterator::operator*() const
 {
-  return nodeptr_;
+  return nodeptr_->data;
 }
 template< class T >
 T *tampio::ForwardList< T >::Iterator::operator->()
 {
-  return nodeptr_;
+  return &(nodeptr_->data);
 }
 template< class T >
 const T *tampio::ForwardList< T >::Iterator::operator->() const
 {
-  return nodeptr_;
+  return &(nodeptr_->data);
 }
 template< class T >
 bool tampio::ForwardList< T >::Iterator::operator==(const Iterator &oth) const
 {
-  return nodeptr_ == oth.nodeptr_;
+  return nodeptr_ == oth.nodeptr_ && nextptr_ == oth.nextptr_;
 }
 template< class T >
 bool tampio::ForwardList< T >::Iterator::operator!=(const Iterator &oth) const
@@ -248,14 +262,23 @@ template< class T >
 typename tampio::ForwardList< T >::Iterator &
 tampio::ForwardList< T >::Iterator::operator++()
 {
-  nodeptr_ = nodeptr_->next;
+  nodeptr_ = nextptr_;
+  if (nodeptr_ != nullptr)
+  {
+    nextptr_ = nodeptr_->next;
+  }
+  else
+  {
+    nextptr_ = nullptr;
+    // throw std::out_of_range("Выход итератора за пределы списка");
+  }
   return *this;
 }
 template< class T >
 typename tampio::ForwardList< T >::Iterator
 tampio::ForwardList< T >::Iterator::operator++(int)
 {
-  typename tampio::ForwardList< T >::Iterator temp(nodeptr_);
+  Iterator temp(nodeptr_);
   ++(*this);
   return temp;
 }
@@ -263,14 +286,42 @@ tampio::ForwardList< T >::Iterator::operator++(int)
 template< class T >
 typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::begin()
 {
-  return typename tampio::ForwardList< T >::Iterator(head_);
+  return Iterator(head_);
 }
 template< class T >
 typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::end()
 {
-  // По факту, некорректно, поскольку должен указывать на элемент, после
-  // последнего. TODO: FIX ME
-  return typename tampio::ForwardList< T >::Iterator(tail_);
+  return Iterator(tail_);
 }
-
+template< class T >
+typename tampio::ForwardList< T >::Iterator
+tampio::ForwardList< T >::beforeBegin()
+{
+  Iterator it;
+  it.nextptr_ = head_;
+  return it;
+}
+template< class T >
+typename tampio::ForwardList< T >::Iterator
+tampio::ForwardList< T >::insertAfter(const Iterator &pos, const T &item)
+{
+  std::cout << "insertafter";
+  if (pos == beforeBegin())
+  {
+    pushFront(item);
+    return begin();
+  }
+  else if (pos == end())
+  {
+    std::cout << "pushBack";
+    pushBack(item);
+    return end();
+  }
+  // pos (+newNode+) wasNext
+  node_t *newNode = new node_t;
+  newNode->next = pos.nextptr_;
+  newNode->data = item;
+  pos.nodeptr_->next = newNode;
+  return pos;
+}
 #endif
