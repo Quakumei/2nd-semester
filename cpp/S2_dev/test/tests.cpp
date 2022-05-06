@@ -1,6 +1,9 @@
 
-#include "../src/List.hpp"
-// #include "../src/ForwardList.hpp"
+// #include "../src/List.hpp"
+#include "../src/ForwardList.hpp"
+// #include <map>
+
+// #include "../src/Dictionary.hpp"
 #include <forward_list>
 
 #define CATCH_CONFIG_MAIN
@@ -60,7 +63,7 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
     stl_fl.push_front(i);
   }
   std::forward_list< int >::iterator it_stl = stl_fl.begin();
-  ForwardList< int >::Iterator it_tamp = tamp_fl.begin();
+  ForwardList< int >::Iterator it_tamp = tamp_fl.beforeBegin()++;
   for (int i = 0; i < 5; i++)
   {
     REQUIRE(*(it_stl++) == *(it_tamp++));
@@ -71,3 +74,9 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
   //   INFO("stl_fl: " << el);
   // }
 }
+
+// TEST_CASE("Custom dictionary doing good!", "[Unit]")
+// {
+//   Dictionary< std::string, std::string > tamp_dict;
+//   map< std::string, std::string > std_map;
+// }

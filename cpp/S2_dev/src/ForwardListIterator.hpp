@@ -57,5 +57,5 @@ namespace tampio
     StructPointerType ptr_;
   };
 
-} // namespace tampio
+}
 #endif
