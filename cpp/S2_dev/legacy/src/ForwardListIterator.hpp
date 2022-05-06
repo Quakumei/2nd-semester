@@ -8,12 +8,11 @@ namespace tampio
   {
   public:
     using StructType = typename ForwardList::StructType;
-    using StructPointerType = StructType *;
     using ValueType = typename ForwardList::ValueType;
+    using StructPointerType = StructType *;
     using PointerType = ValueType *;
     using ReferenceType = ValueType &;
 
-  public:
     ForwardListIterator(StructPointerType ptr) :
         ptr_(ptr)
     {}
@@ -35,7 +34,7 @@ namespace tampio
 
     PointerType operator->()
     {
-      return ptr_;
+      return &(ptr_->data);
     }
 
     ReferenceType operator*()
