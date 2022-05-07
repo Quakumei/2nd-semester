@@ -51,8 +51,8 @@ int main(int argc, char* argv[])
       }
       datasets.push(nameOfDict, dictionariesOfValues);
     }
-    std::string name = "first";
-    Dict example = datasets.get(name);
-    print(example, name, std::cout);
   }
+  std::string name = "first";
+  Dict example = datasets.get(name);
+  print(example, name, std::cout);
 }

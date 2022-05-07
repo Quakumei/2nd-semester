@@ -10,10 +10,11 @@ void tampio::print(const tampio::Dict& d,
 {
   if (d.empty())
   {
-    std::cout << "<EMPTY>" << std::endl;
+    std::cout << "<EMPTY>" << '\n';
     return;
   }
   os << name << ' ';
   d.print(os);
   os << '\n';
+  return;
 }
