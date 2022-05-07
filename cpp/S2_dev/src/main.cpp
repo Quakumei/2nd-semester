@@ -55,4 +55,21 @@ int main(int argc, char* argv[])
   std::string name = "first";
   Dict example = datasets.get(name);
   print(example, name, std::cout);
+
+  name = "second";
+  example = datasets.get(name);
+  print(example, name, std::cout);
+
+  name = "third";
+  datasets.push(name,
+      complement(datasets.get("first"), datasets.get("second")));
+  print(datasets.get(name), name, std::cout);
+
+  name = "fourth";
+  datasets.push(name, intersect(datasets.get("first"), datasets.get("second")));
+  print(datasets.get(name), name, std::cout);
+
+  name = "fifth";
+  datasets.push(name, unionDict(datasets.get("first"), datasets.get("second")));
+  print(datasets.get(name), name, std::cout);
 }

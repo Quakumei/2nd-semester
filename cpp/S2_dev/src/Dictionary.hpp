@@ -29,6 +29,10 @@ namespace tampio
 
     // Iterator methods
     typename List::Iterator find(const Key&) const;
+    typename List::Iterator begin();
+    typename List::Iterator end();
+    const typename List::Iterator begin() const;
+    const typename List::Iterator end() const;
 
     // Console methods
     bool empty() const;
@@ -42,6 +46,32 @@ namespace tampio
     */
     List data_;
   };
+}
+
+template< class Key, class Value, class Compare >
+typename tampio::Dictionary< Key, Value, Compare >::List::Iterator
+tampio::Dictionary< Key, Value, Compare >::begin()
+{
+  return data_.begin();
+}
+template< class Key, class Value, class Compare >
+typename tampio::Dictionary< Key, Value, Compare >::List::Iterator
+tampio::Dictionary< Key, Value, Compare >::end()
+{
+  return data_.end();
+}
+
+template< class Key, class Value, class Compare >
+const typename tampio::Dictionary< Key, Value, Compare >::List::Iterator
+tampio::Dictionary< Key, Value, Compare >::begin() const
+{
+  return data_.begin();
+}
+template< class Key, class Value, class Compare >
+const typename tampio::Dictionary< Key, Value, Compare >::List::Iterator
+tampio::Dictionary< Key, Value, Compare >::end() const
+{
+  return data_.end();
 }
 
 template< class Key, class Value, class Compare >
