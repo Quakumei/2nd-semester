@@ -74,20 +74,14 @@ void tampio::Dictionary< Key, Value, Compare >::push(const Key& key,
   }
   std::pair< Key, Value > tempPair(key, value);
   typename List::Iterator it = data_.beforeBegin();
-
-  if (cmp(tempPair.first, (it + 1)->first))
-  {
-    data_.insertAfter(it, tempPair);
-    return;
-  }
   while ((it + 1) != data_.end())
   {
-    ++it;
     if (cmp(tempPair.first, (it + 1)->first))
     {
       data_.insertAfter(it, tempPair);
       return;
     }
+    ++it;
   }
   data_.insertAfter(it, tempPair);
   return;
@@ -108,10 +102,9 @@ Value tampio::Dictionary< Key, Value, Compare >::drop(const Key& key)
   {
     throw std::out_of_range("No such key in the dict. (get())");
   }
-  // Не эффективно
   typename List::Iterator it = find(key);
   Value temp = *it.second;
-  data_.drop(it);
+  data_.deleteNode(it);
   return temp;
 }
 
@@ -122,16 +115,13 @@ tampio::Dictionary< Key, Value, Compare >::find(const Key& key)
 {
   // Небольшой костыль при работе с кастрированным end()
   typename List::Iterator i = data_.begin();
-  if (*i.first == key)
-  {
-    return i;
-  }
-  while (i++ != data_.end())
+  while (i != data_.end())
   {
     if (*i.first == key)
     {
       return i;
     }
+    i++;
   }
   return typename List::Iterator();
 }

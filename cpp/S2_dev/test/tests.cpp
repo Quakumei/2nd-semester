@@ -98,6 +98,10 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
   {
     std::cout << '\n' << *i;
   }
+
+  tamp_fl.deleteNode(tamp_fl.beforeEnd());
+  REQUIRE(0 == *(tamp_fl.beforeEnd()));
+
   // stl_fl.insert_after(stl_fl.end(), HOLY_2);
   // std::cout << "insert done 2";
   // it_stl = stl_fl.end();

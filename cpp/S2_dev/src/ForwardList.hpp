@@ -23,6 +23,7 @@ namespace tampio
     void pushBack(const T &);
     void pushFront(const T &);
     void deleteFront();
+    void deleteBack();
     T front() const;
     T tail() const;
     bool empty() const noexcept;
@@ -66,6 +67,7 @@ namespace tampio
     bool operator==(const Iterator &) const;
     Iterator &operator++();
     Iterator operator++(int);
+    Iterator operator+(int);
 
   private:
     node_t *nodeptr_;
@@ -83,6 +85,25 @@ void tampio::ForwardList< T >::deleteFront()
   }
   node_t *temp = head_;
   head_ = (head_ == tail_) ? tail_ = nullptr : head_->next;
+  delete temp;
+}
+template< class T >
+void tampio::ForwardList< T >::deleteBack()
+{
+  if (empty())
+  {
+    throw std::logic_error("ForwardList is empty");
+  }
+  node_t *temp = tail_;
+  node_t *beforeTemp = nullptr;
+  for (Iterator i = begin(); i != end(); i++)
+  {
+    if (i.nextptr_ == temp)
+    {
+      beforeTemp = i.nodeptr_;
+    }
+  }
+  tail_ = (head_ == tail_) ? head_ = nullptr : beforeTemp;
   delete temp;
 }
 template< class T >
@@ -284,6 +305,18 @@ tampio::ForwardList< T >::Iterator::operator++(int)
   ++(*this);
   return temp;
 }
+template< class T >
+typename tampio::ForwardList< T >::Iterator
+tampio::ForwardList< T >::Iterator::operator+(int n)
+{
+  Iterator temp(nodeptr_);
+  while (n != 0)
+  {
+    temp++;
+    n--;
+  }
+  return temp;
+}
 // Iterator methods in ForwardList
 template< class T >
 typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::begin()
@@ -338,6 +371,27 @@ tampio::ForwardList< T >::insertAfter(const Iterator &pos, const T &item)
 template< class T >
 void tampio::ForwardList< T >::deleteNode(const Iterator &pos)
 {
+  for (Iterator i = beforeBegin(); (i + 1) != end(); i++)
+  {
+    if ((i + 1) == pos)
+    {
+      std::cout << "ANNIHILATION BEGAN";
+      if (pos == begin())
+      {
+        deleteFront();
+        return;
+      }
+      if (pos == beforeEnd())
+      {
+        deleteBack();
+        return;
+      }
+      i.nodeptr_->next = i.nextptr_->next;
+      delete i.nextptr_;
+      return;
+    }
+  }
+  throw std::logic_error("No such node (deleteNode(Iterator))");
 }
 
 #endif
