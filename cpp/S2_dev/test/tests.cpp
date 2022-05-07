@@ -86,15 +86,17 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
   //   // last
   const int HOLY_2 = 43;
   std::cout << "insert ready 0";
-  it_tamp = tamp_fl.insertAfter(tamp_fl.end(), HOLY_2);
-  REQUIRE(HOLY_2 == *(it_tamp));
+  tamp_fl.insertAfter(tamp_fl.beforeEnd(), HOLY_2);
+  REQUIRE(HOLY_2 == *(tamp_fl.beforeEnd()));
   std::cout << "insert done 1";
 
   // it_stl_bb = stl_fl.before_begin();
-  it_tamp_bb = tamp_fl.beforeBegin();
-  for (int i = 0; i < 7; i++)
+  // it_tamp_bb = tamp_fl.beforeBegin();
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
+       i != tamp_fl.end();
+       i++)
   {
-    std::cout << '\n' << *(++it_tamp_bb);
+    std::cout << '\n' << *i;
   }
   // stl_fl.insert_after(stl_fl.end(), HOLY_2);
   // std::cout << "insert done 2";

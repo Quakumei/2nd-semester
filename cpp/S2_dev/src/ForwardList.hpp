@@ -31,8 +31,10 @@ namespace tampio
     class Iterator;
     Iterator begin();
     Iterator end();
+    Iterator beforeEnd();
     Iterator beforeBegin();
     Iterator insertAfter(const Iterator &, const T &);
+    void deleteNode(const Iterator &);
 
   private:
     struct node_t
@@ -291,7 +293,15 @@ typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::begin()
 template< class T >
 typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::end()
 {
+  // return Iterator(tail_);
+  return Iterator();
+}
+template< class T >
+typename tampio::ForwardList< T >::Iterator
+tampio::ForwardList< T >::beforeEnd()
+{
   return Iterator(tail_);
+  // return Iterator();
 }
 template< class T >
 typename tampio::ForwardList< T >::Iterator
@@ -301,19 +311,20 @@ tampio::ForwardList< T >::beforeBegin()
   it.nextptr_ = head_;
   return it;
 }
+
 template< class T >
 typename tampio::ForwardList< T >::Iterator
 tampio::ForwardList< T >::insertAfter(const Iterator &pos, const T &item)
 {
-  std::cout << "insertafter";
+  // std::cout << "insertafter";
   if (pos == beforeBegin())
   {
     pushFront(item);
     return begin();
   }
-  else if (pos == end())
+  else if (pos == beforeEnd())
   {
-    std::cout << "pushBack";
+    // std::cout << "pushBack";
     pushBack(item);
     return end();
   }
@@ -324,4 +335,9 @@ tampio::ForwardList< T >::insertAfter(const Iterator &pos, const T &item)
   pos.nodeptr_->next = newNode;
   return pos;
 }
+template< class T >
+void tampio::ForwardList< T >::deleteNode(const Iterator &pos)
+{
+}
+
 #endif
