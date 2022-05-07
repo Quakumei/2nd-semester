@@ -25,10 +25,14 @@ namespace tampio
     Value get(const Key&) const;
     Value drop(const Key&);
 
-    bool doesKeyExist(const Key&);
+    bool doesKeyExist(const Key&) const;
 
     // Iterator methods
-    typename List::Iterator find(const Key&);
+    typename List::Iterator find(const Key&) const;
+
+    // Console methods
+    bool empty() const;
+    void print(std::ostream&) const;
 
   private:
     Compare cmp_;
@@ -38,6 +42,25 @@ namespace tampio
     */
     List data_;
   };
+}
+
+template< class Key, class Value, class Compare >
+bool tampio::Dictionary< Key, Value, Compare >::empty() const
+{
+  return data_.begin() == data_.end();
+}
+
+template< class Key, class Value, class Compare >
+void tampio::Dictionary< Key, Value, Compare >::print(std::ostream& os) const
+{
+  for (typename List::Iterator i = data_.begin(); i != data_.end(); i++)
+  {
+    os << i->first << ' ' << i->second;
+    if ((i + 1) != data_.end())
+    {
+      os << ' ';
+    }
+  }
 }
 
 template< class Key, class Value, class Compare >
@@ -59,7 +82,8 @@ tampio::Dictionary< Key, Value, Compare >::Dictionary(Dict&& other) :
 {
 }
 template< class Key, class Value, class Compare >
-bool tampio::Dictionary< Key, Value, Compare >::doesKeyExist(const Key& key)
+bool tampio::Dictionary< Key, Value, Compare >::doesKeyExist(
+    const Key& key) const
 {
   return find(key) != typename List::Iterator();
 }
@@ -68,15 +92,16 @@ template< class Key, class Value, class Compare >
 void tampio::Dictionary< Key, Value, Compare >::push(const Key& key,
     const Value& value)
 {
-  if (!doesKeyExist(key))
+  if (doesKeyExist(key))
   {
+    find(key)->second = value;
     return;
   }
   std::pair< Key, Value > tempPair(key, value);
   typename List::Iterator it = data_.beforeBegin();
   while ((it + 1) != data_.end())
   {
-    if (cmp(tempPair.first, (it + 1)->first))
+    if (cmp_(tempPair.first, (it + 1)->first))
     {
       data_.insertAfter(it, tempPair);
       return;
@@ -93,7 +118,7 @@ Value tampio::Dictionary< Key, Value, Compare >::get(const Key& key) const
   {
     throw std::out_of_range("No such key in the dict. (get())");
   }
-  return *find(key).second;
+  return find(key)->second;
 }
 template< class Key, class Value, class Compare >
 Value tampio::Dictionary< Key, Value, Compare >::drop(const Key& key)
@@ -103,7 +128,7 @@ Value tampio::Dictionary< Key, Value, Compare >::drop(const Key& key)
     throw std::out_of_range("No such key in the dict. (get())");
   }
   typename List::Iterator it = find(key);
-  Value temp = *it.second;
+  Value temp = it->second;
   data_.deleteNode(it);
   return temp;
 }
@@ -111,17 +136,14 @@ Value tampio::Dictionary< Key, Value, Compare >::drop(const Key& key)
 // Iterator methods
 template< class Key, class Value, class Compare >
 typename tampio::Dictionary< Key, Value, Compare >::List::Iterator
-tampio::Dictionary< Key, Value, Compare >::find(const Key& key)
+tampio::Dictionary< Key, Value, Compare >::find(const Key& key) const
 {
-  // Небольшой костыль при работе с кастрированным end()
-  typename List::Iterator i = data_.begin();
-  while (i != data_.end())
+  for (typename List::Iterator it = data_.begin(); it != data_.end(); it++)
   {
-    if (*i.first == key)
+    if (it->first == key)
     {
-      return i;
+      return it;
     }
-    i++;
   }
   return typename List::Iterator();
 }

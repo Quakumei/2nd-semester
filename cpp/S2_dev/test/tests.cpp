@@ -1,3 +1,7 @@
+
+#include <map>
+
+#include "../src/Dictionary.hpp"
 #include "../src/ForwardList.hpp"
 #include <forward_list>
 
@@ -85,10 +89,10 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
 
   //   // last
   const int HOLY_2 = 43;
-  std::cout << "insert ready 0";
+  // std::cout <<  "insert ready 0\n";
   tamp_fl.insertAfter(tamp_fl.beforeEnd(), HOLY_2);
   REQUIRE(HOLY_2 == *(tamp_fl.beforeEnd()));
-  std::cout << "insert done 1";
+  // std::cout <<  "insert done 1\n";
 
   // it_stl_bb = stl_fl.before_begin();
   // it_tamp_bb = tamp_fl.beforeBegin();
@@ -96,16 +100,83 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
        i != tamp_fl.end();
        i++)
   {
-    std::cout << '\n' << *i;
+    // std::cout <<  '\n' << *i;
   }
+  // std::cout <<  '\n';
+  // std::cout <<  "delete2, commesnce\n";
+  tamp_fl.deleteNode(tamp_fl.begin());
+  // std::cout <<  "delete2, successful\n";
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
+       i != tamp_fl.end();
+       i++)
+  {
+    // std::cout <<  ' ' << *i;
+  }
+  REQUIRE(4 == *(tamp_fl.begin()));
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
+       i != tamp_fl.end();
+       i++)
+  {
+    // std::cout <<  ' ' << *i;
+  }
+  // std::cout <<  '\n';
 
+  // std::cout <<  "delete, commesnce\n";
   tamp_fl.deleteNode(tamp_fl.beforeEnd());
+  // std::cout <<  "delete, successful\n";
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
+       i != tamp_fl.end();
+       i++)
+  {
+    // std::cout <<  '\n' << *i;
+  }
+  // std::cout <<  '\n';
+
   REQUIRE(0 == *(tamp_fl.beforeEnd()));
 
+  // std::cout <<  "delete3, commesnce\n";
+  tamp_fl.deleteNode(++(++tamp_fl.begin()));
+  // std::cout <<  "delete3, successful\n";
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
+       i != tamp_fl.end();
+       i++)
+  {
+    // std::cout <<  '\n' << *i;
+  }
+  // std::cout <<  '\n';
+
+  REQUIRE(1 == *(++(++tamp_fl.begin())));
+
   // stl_fl.insert_after(stl_fl.end(), HOLY_2);
-  // std::cout << "insert done 2";
+  // // std::cout <<  "insert done 2";
   // it_stl = stl_fl.end();
   // it_tamp = tamp_fl.end();
 
   // REQUIRE(*(it_stl) == *(it_tamp));
+}
+
+TEST_CASE("Dictionary works as std::map", "[InSanity]")
+{
+  tampio::Dictionary< std::string, std::string, std::less< std::string > >
+      tamp_dict;
+  std::map< std::string, std::string, std::less< std::string > > stl_dict;
+
+  // TODO:  Replace with operator []
+  tamp_dict.push("cock", "suck");
+  tamp_dict.push("cock", "suck1");
+  tamp_dict.push("cock2", "suck2");
+  tamp_dict.push("cock3", "suck3");
+
+  stl_dict["cock"] = "suck";
+  stl_dict["cock"] = "suck1";
+  stl_dict["cock2"] = "suck2";
+  stl_dict["cock3"] = "suck3";
+  REQUIRE(stl_dict["cock2"] == tamp_dict.get("cock2"));
+  REQUIRE(stl_dict["cock3"] == tamp_dict.get("cock3"));
+  REQUIRE(stl_dict["cock"] == tamp_dict.get("cock"));
+
+  stl_dict.erase("cock");
+  tamp_dict.drop("cock");
+  REQUIRE_FALSE(tamp_dict.doesKeyExist("cock"));
+  REQUIRE_FALSE(stl_dict.find("cock") != stl_dict.end());
 }
