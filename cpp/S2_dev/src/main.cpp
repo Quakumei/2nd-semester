@@ -7,7 +7,7 @@ using namespace tampio;
 
 int main(int argc, char* argv[])
 {
-  if (argc < 2)
+  if (argc != 2)
   {
     std::cerr << "No input file specified";
     return 1;
@@ -80,6 +80,10 @@ int main(int argc, char* argv[])
       std::string name, left, right;
       std::cin >> name >> left >> right;
       datasets.push(name, unionDict(datasets.get(left), datasets.get(right)));
+    }
+    else
+    {
+      std::cout << "<INVALID COMMAND>";
     }
   }
 }

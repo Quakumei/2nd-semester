@@ -2,9 +2,7 @@
 #define UTILITY_H
 
 #include <iostream>
-// #include <map>
 #include <string>
-
 #include "Dictionary.hpp"
 
 namespace tampio

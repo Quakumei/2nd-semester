@@ -3,7 +3,6 @@
 
 #include <stdexcept>
 #include <utility>
-
 #include "ForwardList.hpp"
 namespace tampio
 {
@@ -16,19 +15,19 @@ namespace tampio
 
     Dictionary();
     ~Dictionary() = default;
-    Dictionary(const Dict& other);
-    Dictionary(Dict&& other);
-    Dict& operator=(const Dict& other) = default;
-    Dict& operator=(Dict&& other) = default;
+    Dictionary(const Dict &other);
+    Dictionary(Dict &&other);
+    Dict &operator=(const Dict &other) = default;
+    Dict &operator=(Dict &&other) = default;
 
-    void push(const Key&, const Value&);
-    Value get(const Key&) const;
-    Value drop(const Key&);
+    void push(const Key &, const Value &);
+    Value get(const Key &) const;
+    Value drop(const Key &);
 
-    bool doesKeyExist(const Key&) const;
+    bool doesKeyExist(const Key &) const;
 
     // Iterator methods
-    typename List::Iterator find(const Key&) const;
+    typename List::Iterator find(const Key &) const;
     typename List::Iterator begin();
     typename List::Iterator end();
     const typename List::Iterator begin() const;
@@ -36,7 +35,7 @@ namespace tampio
 
     // Console methods
     bool empty() const;
-    void print(std::ostream&) const;
+    void print(std::ostream &) const;
 
   private:
     Compare cmp_;
@@ -46,17 +45,15 @@ namespace tampio
     */
     List data_;
   };
-}
+} // namespace tampio
 
 template< class Key, class Value, class Compare >
-typename tampio::Dictionary< Key, Value, Compare >::List::Iterator
-tampio::Dictionary< Key, Value, Compare >::begin()
+typename tampio::Dictionary< Key, Value, Compare >::List::Iterator tampio::Dictionary< Key, Value, Compare >::begin()
 {
   return data_.begin();
 }
 template< class Key, class Value, class Compare >
-typename tampio::Dictionary< Key, Value, Compare >::List::Iterator
-tampio::Dictionary< Key, Value, Compare >::end()
+typename tampio::Dictionary< Key, Value, Compare >::List::Iterator tampio::Dictionary< Key, Value, Compare >::end()
 {
   return data_.end();
 }
@@ -81,7 +78,7 @@ bool tampio::Dictionary< Key, Value, Compare >::empty() const
 }
 
 template< class Key, class Value, class Compare >
-void tampio::Dictionary< Key, Value, Compare >::print(std::ostream& os) const
+void tampio::Dictionary< Key, Value, Compare >::print(std::ostream &os) const
 {
   for (typename List::Iterator i = data_.begin(); i != data_.end(); i++)
   {
@@ -100,27 +97,25 @@ tampio::Dictionary< Key, Value, Compare >::Dictionary() :
 {
 }
 template< class Key, class Value, class Compare >
-tampio::Dictionary< Key, Value, Compare >::Dictionary(const Dict& other) :
+tampio::Dictionary< Key, Value, Compare >::Dictionary(const Dict &other) :
     cmp_(Compare()),
     data_(other.data_)
 {
 }
 template< class Key, class Value, class Compare >
-tampio::Dictionary< Key, Value, Compare >::Dictionary(Dict&& other) :
+tampio::Dictionary< Key, Value, Compare >::Dictionary(Dict &&other) :
     cmp_(Compare()),
     data_(other.data_)
 {
 }
 template< class Key, class Value, class Compare >
-bool tampio::Dictionary< Key, Value, Compare >::doesKeyExist(
-    const Key& key) const
+bool tampio::Dictionary< Key, Value, Compare >::doesKeyExist(const Key &key) const
 {
   return find(key) != typename List::Iterator();
 }
 
 template< class Key, class Value, class Compare >
-void tampio::Dictionary< Key, Value, Compare >::push(const Key& key,
-    const Value& value)
+void tampio::Dictionary< Key, Value, Compare >::push(const Key &key, const Value &value)
 {
   if (doesKeyExist(key))
   {
@@ -142,7 +137,7 @@ void tampio::Dictionary< Key, Value, Compare >::push(const Key& key,
   return;
 }
 template< class Key, class Value, class Compare >
-Value tampio::Dictionary< Key, Value, Compare >::get(const Key& key) const
+Value tampio::Dictionary< Key, Value, Compare >::get(const Key &key) const
 {
   if (!doesKeyExist(key))
   {
@@ -151,7 +146,7 @@ Value tampio::Dictionary< Key, Value, Compare >::get(const Key& key) const
   return find(key)->second;
 }
 template< class Key, class Value, class Compare >
-Value tampio::Dictionary< Key, Value, Compare >::drop(const Key& key)
+Value tampio::Dictionary< Key, Value, Compare >::drop(const Key &key)
 {
   if (!doesKeyExist(key))
   {
@@ -165,8 +160,8 @@ Value tampio::Dictionary< Key, Value, Compare >::drop(const Key& key)
 
 // Iterator methods
 template< class Key, class Value, class Compare >
-typename tampio::Dictionary< Key, Value, Compare >::List::Iterator
-tampio::Dictionary< Key, Value, Compare >::find(const Key& key) const
+typename tampio::Dictionary< Key, Value, Compare >::List::Iterator tampio::Dictionary< Key, Value, Compare >::find(
+    const Key &key) const
 {
   for (typename List::Iterator it = data_.begin(); it != data_.end(); it++)
   {

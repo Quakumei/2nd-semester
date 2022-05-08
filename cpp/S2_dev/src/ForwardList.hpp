@@ -216,8 +216,7 @@ tampio::ForwardList< T >::~ForwardList()
 }
 
 template< class T >
-tampio::ForwardList< T > &tampio::ForwardList< T >::operator=(
-    const ForwardList &forwardList)
+tampio::ForwardList< T > &tampio::ForwardList< T >::operator=(const ForwardList &forwardList)
 {
   if (this == &forwardList)
   {
@@ -231,8 +230,7 @@ tampio::ForwardList< T > &tampio::ForwardList< T >::operator=(
 }
 
 template< class T >
-tampio::ForwardList< T > &tampio::ForwardList< T >::operator=(
-    ForwardList &&forwardList) noexcept
+tampio::ForwardList< T > &tampio::ForwardList< T >::operator=(ForwardList &&forwardList) noexcept
 {
   swap(forwardList);
   return *this;
@@ -279,8 +277,7 @@ tampio::ForwardList< T >::Iterator::Iterator(node_t *node)
 };
 
 template< class T >
-typename tampio::ForwardList< T >::Iterator &
-tampio::ForwardList< T >::Iterator::operator=(const Iterator &other)
+typename tampio::ForwardList< T >::Iterator &tampio::ForwardList< T >::Iterator::operator=(const Iterator &other)
 {
   nodeptr_ = other.nodeptr_;
   nextptr_ = other.nextptr_;
@@ -318,8 +315,7 @@ bool tampio::ForwardList< T >::Iterator::operator!=(const Iterator &oth) const
   return !(nodeptr_ == oth.nodeptr_);
 }
 template< class T >
-typename tampio::ForwardList< T >::Iterator &
-tampio::ForwardList< T >::Iterator::operator++()
+typename tampio::ForwardList< T >::Iterator &tampio::ForwardList< T >::Iterator::operator++()
 {
   // // std::cout << "before operator++:\n";
   // // std::cout << "nodeptr_:" << nodeptr_ << "\n";
@@ -340,16 +336,14 @@ tampio::ForwardList< T >::Iterator::operator++()
   return *this;
 }
 template< class T >
-typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::Iterator::operator++(int)
+typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::Iterator::operator++(int)
 {
   Iterator temp(nodeptr_);
   ++(*this);
   return temp;
 }
 template< class T >
-typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::Iterator::operator+(int n)
+typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::Iterator::operator+(int n)
 {
   if (n == 0)
     return *this;
@@ -394,15 +388,13 @@ typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::end()
   return Iterator();
 }
 template< class T >
-typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::beforeEnd()
+typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::beforeEnd()
 {
   // Возвращает итератор на последний элемент списка.
   return Iterator(tail_);
 }
 template< class T >
-typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::beforeBegin()
+typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::beforeBegin()
 {
   // Возвращает итератор как бы перед первым элементом.
   Iterator it;
@@ -410,29 +402,25 @@ tampio::ForwardList< T >::beforeBegin()
   return it;
 }
 template< class T >
-const typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::begin() const
+const typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::begin() const
 {
   return Iterator(head_);
 }
 template< class T >
-const typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::end() const
+const typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::end() const
 {
   // Возвращает "как бы" значение после последнего. Де факто, итератор
   // заполненный нулями
   return Iterator();
 }
 template< class T >
-const typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::beforeEnd() const
+const typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::beforeEnd() const
 {
   // Возвращает итератор на последний элемент списка.
   return Iterator(tail_);
 }
 template< class T >
-const typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::beforeBegin() const
+const typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::beforeBegin() const
 {
   // Возвращает итератор как бы перед первым элементом.
   Iterator it;
@@ -441,8 +429,8 @@ tampio::ForwardList< T >::beforeBegin() const
 }
 
 template< class T >
-const typename tampio::ForwardList< T >::Iterator
-tampio::ForwardList< T >::insertAfter(const Iterator &pos, const T &item)
+const typename tampio::ForwardList< T >::Iterator tampio::ForwardList< T >::insertAfter(const Iterator &pos,
+    const T &item)
 {
   // // std::cout << "insertafter";
   if (pos == beforeBegin())
