@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <limits>
 
 #include "Dictionary.hpp"
 #include "utility.hpp"
@@ -85,7 +86,7 @@ int main(int argc, char* argv[])
         std::cin >> name >> left >> right;
         datasets.push(name, unionDict(datasets.get(left), datasets.get(right)));
       }
-      else
+      else if (!std::cin.eof())
       {
         throw std::logic_error("unknown command");
       }
@@ -93,6 +94,7 @@ int main(int argc, char* argv[])
     catch (const std::exception&)
     {
       std::cout << "<INVALID COMMAND>\n";
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 }
