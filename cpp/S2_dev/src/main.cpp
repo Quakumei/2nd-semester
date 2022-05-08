@@ -54,36 +54,45 @@ int main(int argc, char* argv[])
   }
   while (!std::cin.eof())
   {
-    std::string command = "";
-    std::cin >> command;
-    if (command == "print")
+    try
     {
-      std::string name;
-      std::cin >> name;
-      Dict example = datasets.get(name);
-      print(example, name, std::cout);
+
+      std::string command = "";
+      std::cin >> command;
+      if (command == "print")
+      {
+        std::string name;
+        std::cin >> name;
+        Dict example = datasets.get(name);
+        print(example, name, std::cout);
+      }
+      else if (command == "complement")
+      {
+        std::string name, left, right;
+        std::cin >> name >> left >> right;
+        datasets.push(name,
+            complement(datasets.get(left), datasets.get(right)));
+      }
+      else if (command == "intersect")
+      {
+        std::string name, left, right;
+        std::cin >> name >> left >> right;
+        datasets.push(name, intersect(datasets.get(left), datasets.get(right)));
+      }
+      else if (command == "union")
+      {
+        std::string name, left, right;
+        std::cin >> name >> left >> right;
+        datasets.push(name, unionDict(datasets.get(left), datasets.get(right)));
+      }
+      else
+      {
+        throw std::logic_error("unknown command");
+      }
     }
-    else if (command == "complement")
+    catch (const std::exception&)
     {
-      std::string name, left, right;
-      std::cin >> name >> left >> right;
-      datasets.push(name, complement(datasets.get(left), datasets.get(right)));
-    }
-    else if (command == "intersect")
-    {
-      std::string name, left, right;
-      std::cin >> name >> left >> right;
-      datasets.push(name, intersect(datasets.get(left), datasets.get(right)));
-    }
-    else if (command == "union")
-    {
-      std::string name, left, right;
-      std::cin >> name >> left >> right;
-      datasets.push(name, unionDict(datasets.get(left), datasets.get(right)));
-    }
-    else
-    {
-      std::cout << "<INVALID COMMAND>";
+      std::cout << "<INVALID COMMAND>\n";
     }
   }
 }

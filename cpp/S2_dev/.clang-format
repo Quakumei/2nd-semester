@@ -8,7 +8,7 @@ AlwaysBreakTemplateDeclarations: Yes
 FixNamespaceComments: false
 IncludeBlocks: Merge
 NamespaceIndentation: All
-IncludeBlocks: Regroup
+# IncludeBlocks: Regroup
 
 #
 AllowAllParametersOfDeclarationOnNextLine: false
@@ -52,7 +52,7 @@ BreakBeforeBraces: Allman # Allman, Attach
 
 SpaceAfterTemplateKeyword: false
 DerivePointerAlignment: true
-ColumnLimit: 80
+ColumnLimit: 120
 PointerAlignment: Left
 MaxEmptyLinesToKeep: 1
 UseCRLF: false
