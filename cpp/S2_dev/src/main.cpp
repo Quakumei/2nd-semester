@@ -52,24 +52,34 @@ int main(int argc, char* argv[])
       datasets.push(nameOfDict, dictionariesOfValues);
     }
   }
-  std::string name = "first";
-  Dict example = datasets.get(name);
-  print(example, name, std::cout);
-
-  name = "second";
-  example = datasets.get(name);
-  print(example, name, std::cout);
-
-  name = "third";
-  datasets.push(name,
-      complement(datasets.get("first"), datasets.get("second")));
-  print(datasets.get(name), name, std::cout);
-
-  name = "fourth";
-  datasets.push(name, intersect(datasets.get("first"), datasets.get("second")));
-  print(datasets.get(name), name, std::cout);
-
-  name = "fifth";
-  datasets.push(name, unionDict(datasets.get("first"), datasets.get("second")));
-  print(datasets.get(name), name, std::cout);
+  while (!std::cin.eof())
+  {
+    std::string command = "";
+    std::cin >> command;
+    if (command == "print")
+    {
+      std::string name;
+      std::cin >> name;
+      Dict example = datasets.get(name);
+      print(example, name, std::cout);
+    }
+    else if (command == "complement")
+    {
+      std::string name, left, right;
+      std::cin >> name >> left >> right;
+      datasets.push(name, complement(datasets.get(left), datasets.get(right)));
+    }
+    else if (command == "intersect")
+    {
+      std::string name, left, right;
+      std::cin >> name >> left >> right;
+      datasets.push(name, intersect(datasets.get(left), datasets.get(right)));
+    }
+    else if (command == "union")
+    {
+      std::string name, left, right;
+      std::cin >> name >> left >> right;
+      datasets.push(name, unionDict(datasets.get(left), datasets.get(right)));
+    }
+  }
 }
