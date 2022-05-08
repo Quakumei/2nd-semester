@@ -7,16 +7,16 @@ using namespace tampio;
 
 int main(int argc, char* argv[])
 {
-  if (argc != 2)
+  if (argc < 2)
   {
-    std::cerr << "Error input file";
+    std::cerr << "No input file specified";
     return 1;
   }
+  std::ifstream in(argv[1]);
+
   using Dict = tampio::Dictionary< std::string, std::string >;
   using DictOfDict = Dictionary< std::string, Dict >;
-  std::cout << "Reading: " << argv[1] << '\n';
-  std::ifstream in(argv[1]);
-  ForwardList< std::string > words;
+  ForwardList< std::string > lexemes;
   DictOfDict datasets;
   while (!in.eof())
   {
@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
       {
         if (line[i] == ' ')
         {
-          words.pushBack(temp);
+          lexemes.pushBack(temp);
           temp = "";
         }
         else
@@ -38,18 +38,18 @@ int main(int argc, char* argv[])
           temp += line[i];
         }
       }
-      std::string nameOfDict = words.front();
-      words.deleteFront();
-      Dict dictionariesOfValues;
-      while (!words.empty())
+      std::string datasetName = lexemes.front();
+      lexemes.deleteFront();
+      Dict dataset;
+      while (!lexemes.empty())
       {
-        std::string key = words.front();
-        words.deleteFront();
-        std::string value = words.front();
-        words.deleteFront();
-        dictionariesOfValues.push(key, value);
+        std::string key = lexemes.front();
+        lexemes.deleteFront();
+        std::string value = lexemes.front();
+        lexemes.deleteFront();
+        dataset.push(key, value);
       }
-      datasets.push(nameOfDict, dictionariesOfValues);
+      datasets.push(datasetName, dataset);
     }
   }
   while (!std::cin.eof())
