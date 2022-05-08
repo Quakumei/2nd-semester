@@ -6,7 +6,7 @@ void tampio::print(const tampio::Dict& d, const std::string& name, std::ostream&
 {
   if (d.empty())
   {
-    std::cout << "<EMPTY>" << '\n';
+    os << "<EMPTY>" << '\n';
     return;
   }
   os << name << ' ';
@@ -14,7 +14,6 @@ void tampio::print(const tampio::Dict& d, const std::string& name, std::ostream&
   os << '\n';
   return;
 }
-
 tampio::Dict tampio::complement(const Dict& a, const Dict& b)
 {
   Dict res;
@@ -34,7 +33,6 @@ tampio::Dict tampio::complement(const Dict& a, const Dict& b)
   }
   return res;
 }
-
 tampio::Dict tampio::intersect(const Dict& a, const Dict& b)
 {
   Dict res;
@@ -52,7 +50,6 @@ tampio::Dict tampio::intersect(const Dict& a, const Dict& b)
       res.push(i->first, i->second);
     }
   }
-
   return res;
 }
 
@@ -67,6 +64,5 @@ tampio::Dict tampio::unionDict(const Dict& a, const Dict& b)
   {
     res.push(i->first, i->second);
   }
-
   return res;
 }

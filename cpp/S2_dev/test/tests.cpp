@@ -1,9 +1,9 @@
 
 #include <map>
-
 #include "../src/Dictionary.hpp"
 #include "../src/ForwardList.hpp"
 #include <forward_list>
+
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
@@ -96,9 +96,7 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
 
   // it_stl_bb = stl_fl.before_begin();
   // it_tamp_bb = tamp_fl.beforeBegin();
-  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
-       i != tamp_fl.end();
-       i++)
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin(); i != tamp_fl.end(); i++)
   {
     // std::cout <<  '\n' << *i;
   }
@@ -106,16 +104,12 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
   // std::cout <<  "delete2, commesnce\n";
   tamp_fl.deleteNode(tamp_fl.begin());
   // std::cout <<  "delete2, successful\n";
-  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
-       i != tamp_fl.end();
-       i++)
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin(); i != tamp_fl.end(); i++)
   {
     // std::cout <<  ' ' << *i;
   }
   REQUIRE(4 == *(tamp_fl.begin()));
-  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
-       i != tamp_fl.end();
-       i++)
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin(); i != tamp_fl.end(); i++)
   {
     // std::cout <<  ' ' << *i;
   }
@@ -124,9 +118,7 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
   // std::cout <<  "delete, commesnce\n";
   tamp_fl.deleteNode(tamp_fl.beforeEnd());
   // std::cout <<  "delete, successful\n";
-  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
-       i != tamp_fl.end();
-       i++)
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin(); i != tamp_fl.end(); i++)
   {
     // std::cout <<  '\n' << *i;
   }
@@ -137,9 +129,7 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
   // std::cout <<  "delete3, commesnce\n";
   tamp_fl.deleteNode(++(++tamp_fl.begin()));
   // std::cout <<  "delete3, successful\n";
-  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin();
-       i != tamp_fl.end();
-       i++)
+  for (tampio::ForwardList< int >::Iterator i = tamp_fl.begin(); i != tamp_fl.end(); i++)
   {
     // std::cout <<  '\n' << *i;
   }
@@ -157,8 +147,7 @@ TEST_CASE("Custom iterator doing good!", "[Unit]")
 
 TEST_CASE("Dictionary works as std::map", "[InSanity]")
 {
-  tampio::Dictionary< std::string, std::string, std::less< std::string > >
-      tamp_dict;
+  tampio::Dictionary< std::string, std::string, std::less< std::string > > tamp_dict;
   std::map< std::string, std::string, std::less< std::string > > stl_dict;
 
   // TODO:  Replace with operator []

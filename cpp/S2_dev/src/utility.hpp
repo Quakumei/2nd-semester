@@ -1,7 +1,7 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-#include <iostream>
+#include <ostream>
 #include <string>
 #include "Dictionary.hpp"
 

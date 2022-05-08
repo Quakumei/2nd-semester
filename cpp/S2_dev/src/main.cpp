@@ -1,12 +1,12 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
-
 #include "Dictionary.hpp"
 #include "utility.hpp"
+
 using namespace tampio;
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   if (argc != 2)
   {
@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
   }
   std::ifstream in(argv[1]);
 
-  using Dict = tampio::Dictionary< std::string, std::string >;
+  using Dict = Dictionary< std::string, std::string >;
   using DictOfDict = Dictionary< std::string, Dict >;
   ForwardList< std::string > lexemes;
   DictOfDict datasets;
@@ -71,8 +71,7 @@ int main(int argc, char* argv[])
       {
         std::string name, left, right;
         std::cin >> name >> left >> right;
-        datasets.push(name,
-            complement(datasets.get(left), datasets.get(right)));
+        datasets.push(name, complement(datasets.get(left), datasets.get(right)));
       }
       else if (command == "intersect")
       {
@@ -91,7 +90,7 @@ int main(int argc, char* argv[])
         throw std::logic_error("unknown command");
       }
     }
-    catch (const std::exception&)
+    catch (const std::exception &)
     {
       std::cout << "<INVALID COMMAND>\n";
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
