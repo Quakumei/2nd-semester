@@ -76,3 +76,21 @@ void tampio::concat(BidirectionalList< long >& l, const BidirectionalList< long 
     l.pushBack(*i);
   }
 }
+
+bool tampio::equal(const BidirectionalList< long >& a, const BidirectionalList< long >& b)
+{
+  typename tampio::BidirectionalList< long >::Iterator ai = a.begin();
+  typename tampio::BidirectionalList< long >::Iterator bi = b.begin();
+  while (ai != a.end() && bi != b.end())
+  {
+    if (*(ai++) != *(bi++))
+    {
+      return false;
+    }
+  }
+  if (ai != a.end() || bi != b.end())
+  {
+    return false;
+  }
+  return true;
+}

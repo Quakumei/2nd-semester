@@ -132,12 +132,55 @@ int main(int argc, char *argv[])
           lexemes_s.deleteFront();
         }
       }
-      // else if (command == "intersect")
-      // {
-      //   std::string name, left, right;
-      //   std::cin >> name >> left >> right;
-      //   datasets.push(name, intersect(datasets.get(left), datasets.get(right)));
-      // }
+      else if (command == "equal")
+      {
+
+        std::string name;
+        std::cin >> name;
+        std::string listName;
+        std::getline(std::cin, listName);
+        ForwardList< std::string > lexemes_s;
+        if (listName != "\0")
+        {
+          listName += ' ';
+          std::string temp = "";
+          for (size_t i = 0; i < listName.size(); i++)
+          {
+            if (listName[i] == ' ')
+            {
+              lexemes_s.pushBack(temp);
+              temp = "";
+            }
+            else
+            {
+              temp += listName[i];
+            }
+          }
+        }
+        bool flag = true;
+        while (!lexemes_s.empty())
+        {
+          if (lexemes_s.front() == "")
+          {
+            lexemes_s.deleteFront();
+            continue;
+          }
+          if (!equal(lists.get(name), lists.get(lexemes_s.front())))
+          {
+            flag = false;
+            break;
+          }
+          lexemes_s.deleteFront();
+        }
+        if (flag)
+        {
+          std::cout << "<TRUE>\n";
+        }
+        else
+        {
+          std::cout << "<FALSE>\n";
+        }
+      }
       // else if (command == "union")
       // {
       //   std::string name, left, right;
