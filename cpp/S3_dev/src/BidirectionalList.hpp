@@ -435,10 +435,16 @@ tampio::BidirectionalList< T >::insertBefore(const Iterator &pos, const T &item)
     return end();
   }
   node_t *newNode = new node_t;
+  newNode->data = item;
   newNode->next = pos.nodeptr_;
   newNode->previous = pos.nodeptr_->previous;
-  newNode->data = item;
   pos.nodeptr_->previous->next = newNode;
+  pos.nodeptr_->previous = newNode;
+
+  // newNode->next = pos.nodeptr_;
+  // newNode->previous = pos.nodeptr_->previous;
+  // newNode->data = item;
+  // pos.nodeptr_->previous->next = newNode;
   return pos;
 }
 template< class T >

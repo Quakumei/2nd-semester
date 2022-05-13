@@ -24,6 +24,7 @@ namespace tampio
 
     void push(const Key &, const Value &);
     Value get(const Key &) const;
+    Value &getRef(const Key &);
     Value drop(const Key &);
     bool doesKeyExist(const Key &) const;
     bool empty() const;
@@ -111,6 +112,15 @@ void tampio::Dictionary< Key, Value, Compare >::push(const Key &key, const Value
 }
 template< class Key, class Value, class Compare >
 Value tampio::Dictionary< Key, Value, Compare >::get(const Key &key) const
+{
+  if (!doesKeyExist(key))
+  {
+    throw std::out_of_range("No such key in the dict. (get())");
+  }
+  return find(key)->second;
+}
+template< class Key, class Value, class Compare >
+Value &tampio::Dictionary< Key, Value, Compare >::getRef(const Key &key)
 {
   if (!doesKeyExist(key))
   {

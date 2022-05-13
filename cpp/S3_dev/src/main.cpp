@@ -1,3 +1,4 @@
+#include <cctype>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -65,12 +66,19 @@ int main(int argc, char *argv[])
         BidirectionalList< long > example = lists.get(name);
         print(example, name, std::cout);
       }
-      // else if (command == "complement")
-      // {
-      //   std::string name, left, right;
-      //   std::cin >> name >> left >> right;
-      //   datasets.push(name, complement(datasets.get(left), datasets.get(right)));
-      // }
+      else if (command == "replace")
+      {
+        std::string name, left, right;
+        std::cin >> name >> left >> right;
+        if (std::isalpha(right[0]))
+        {
+          replace(lists.getRef(name), std::stoll(left), lists.get(right));
+        }
+        else
+        {
+          replace(lists.getRef(name), std::stoll(left), std::stoll(right));
+        }
+      }
       // else if (command == "intersect")
       // {
       //   std::string name, left, right;

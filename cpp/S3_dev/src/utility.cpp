@@ -27,55 +27,27 @@ void tampio::print(const tampio::BidirectionalList< long >& d, const std::string
   os << '\n';
   return;
 }
-tampio::Dict tampio::complement(const Dict& a, const Dict& b)
+void tampio::replace(BidirectionalList< long >& l, long what, const BidirectionalList< long >& lother)
 {
-  Dict res;
-  for (typename tampio::Dict::List::Iterator i = a.begin(); i != a.end(); i++)
+  for (typename tampio::BidirectionalList< long >::Iterator i = l.begin(); i != l.end(); i++)
   {
-    if (!b.doesKeyExist(i->first))
+    if (*i == what)
     {
-      res.push(i->first, i->second);
+      l.deleteNode(i++);
+      for (typename tampio::BidirectionalList< long >::Iterator j = lother.begin(); j != lother.end(); j++)
+      {
+        l.insertBefore(i, *j);
+      }
     }
   }
-  for (typename tampio::Dict::List::Iterator i = b.begin(); i != b.end(); i++)
-  {
-    if (!a.doesKeyExist(i->first))
-    {
-      res.push(i->first, i->second);
-    }
-  }
-  return res;
 }
-tampio::Dict tampio::intersect(const Dict& a, const Dict& b)
+void tampio::replace(BidirectionalList< long >& l, long what, long towhat)
 {
-  Dict res;
-  for (typename tampio::Dict::List::Iterator i = b.begin(); i != b.end(); i++)
+  for (typename tampio::BidirectionalList< long >::Iterator i = l.begin(); i != l.end(); i++)
   {
-    if (a.doesKeyExist(i->first))
+    if (*i == what)
     {
-      res.push(i->first, i->second);
+      *i = towhat;
     }
   }
-  for (typename tampio::Dict::List::Iterator i = a.begin(); i != a.end(); i++)
-  {
-    if (b.doesKeyExist(i->first))
-    {
-      res.push(i->first, i->second);
-    }
-  }
-  return res;
-}
-
-tampio::Dict tampio::unionDict(const Dict& a, const Dict& b)
-{
-  Dict res;
-  for (typename tampio::Dict::List::Iterator i = b.begin(); i != b.end(); i++)
-  {
-    res.push(i->first, i->second);
-  }
-  for (typename tampio::Dict::List::Iterator i = a.begin(); i != a.end(); i++)
-  {
-    res.push(i->first, i->second);
-  }
-  return res;
 }

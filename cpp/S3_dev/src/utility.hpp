@@ -9,11 +9,8 @@
 namespace tampio
 {
   using Dict = tampio::Dictionary< std::string, std::string >;
-  using DictOfDict = tampio::Dictionary< std::string, Dict >;
-
-  void print(const BidirectionalList< long >& d, const std::string& name, std::ostream& os);
-  Dict complement(const Dict&, const Dict&);
-  Dict intersect(const Dict&, const Dict&);
-  Dict unionDict(const Dict&, const Dict&);
+  void print(const BidirectionalList< long >& l, const std::string& name, std::ostream& os);
+  void replace(BidirectionalList< long >& l, long what, const BidirectionalList< long >& lother);
+  void replace(BidirectionalList< long >& l, long what, long towhat);
 }
 #endif
