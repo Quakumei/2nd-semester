@@ -69,3 +69,10 @@ void tampio::removeElems(BidirectionalList< long >& l, long what)
     }
   }
 }
+void tampio::concat(BidirectionalList< long >& l, const BidirectionalList< long >& other)
+{
+  for (typename tampio::BidirectionalList< long >::Iterator i = other.begin(); i != other.end(); i++)
+  {
+    l.pushBack(*i);
+  }
+}

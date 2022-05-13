@@ -14,5 +14,6 @@ namespace tampio
   void replace(BidirectionalList< long >& l, long what, long towhat);
   void removeElems(BidirectionalList< long >& l, const BidirectionalList< long >& what_list);
   void removeElems(BidirectionalList< long >& l, long what);
+  void concat(BidirectionalList< long >& l, const BidirectionalList< long >& other);
 }
 #endif

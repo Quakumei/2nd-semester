@@ -92,6 +92,46 @@ int main(int argc, char *argv[])
           removeElems(lists.getRef(name), std::stoll(left));
         }
       }
+      else if (command == "concat")
+      {
+
+        std::string name;
+        std::cin >> name;
+        lists.push(name, BidirectionalList< long >());
+
+        std::string listName;
+        std::getline(std::cin, listName);
+        ForwardList< std::string > lexemes_s;
+        if (listName != "\0")
+        {
+          listName += ' ';
+          std::string temp = "";
+          for (size_t i = 0; i < listName.size(); i++)
+          {
+            if (listName[i] == ' ')
+            {
+              lexemes_s.pushBack(temp);
+              temp = "";
+            }
+            else
+            {
+              temp += listName[i];
+            }
+          }
+        }
+
+        while (!lexemes_s.empty())
+        {
+          if (lexemes_s.front() == "")
+          {
+            lexemes_s.deleteFront();
+            continue;
+          }
+          // std::cout << "get:" << lexemes_s.front();
+          concat(lists.getRef(name), lists.get(lexemes_s.front()));
+          lexemes_s.deleteFront();
+        }
+      }
       // else if (command == "intersect")
       // {
       //   std::string name, left, right;
@@ -109,9 +149,11 @@ int main(int argc, char *argv[])
         throw std::logic_error("unknown command");
       }
     }
-    catch (const std::exception &)
+    catch (const std::exception &e)
     {
       std::cout << "<INVALID COMMAND>\n";
+      std::cout << e.what();
+
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
