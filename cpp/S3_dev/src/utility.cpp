@@ -51,3 +51,21 @@ void tampio::replace(BidirectionalList< long >& l, long what, long towhat)
     }
   }
 }
+
+void tampio::removeElems(BidirectionalList< long >& l, const BidirectionalList< long >& what_list)
+{
+  for (typename tampio::BidirectionalList< long >::Iterator i = what_list.begin(); i != l.end(); i++)
+  {
+    removeElems(l, *i);
+  }
+}
+void tampio::removeElems(BidirectionalList< long >& l, long what)
+{
+  for (typename tampio::BidirectionalList< long >::Iterator i = l.begin(); i != l.end(); i++)
+  {
+    if (*i == what)
+    {
+      l.deleteNode(i++);
+    }
+  }
+}

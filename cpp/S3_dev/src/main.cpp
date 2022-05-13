@@ -79,6 +79,19 @@ int main(int argc, char *argv[])
           replace(lists.getRef(name), std::stoll(left), std::stoll(right));
         }
       }
+      else if (command == "remove")
+      {
+        std::string name, left;
+        std::cin >> name >> left;
+        if (std::isalpha(left[0]))
+        {
+          removeElems(lists.getRef(name), lists.get(left));
+        }
+        else
+        {
+          removeElems(lists.getRef(name), std::stoll(left));
+        }
+      }
       // else if (command == "intersect")
       // {
       //   std::string name, left, right;
