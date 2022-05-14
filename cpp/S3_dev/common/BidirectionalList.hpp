@@ -1,9 +1,10 @@
-#ifndef BIDIRECTIONALLIST_H
-#define BIDIRECTIONALLIST_H
+#ifndef BIDIRECTIONAL_LIST_HPP
+#define BIDIRECTIONAL_LIST_HPP
 
 #include <ostream>
 #include <stdexcept>
 #include <utility>
+
 namespace tampio
 {
   template< class T >

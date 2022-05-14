@@ -11,7 +11,7 @@ run_test: out/test.exe
 out/test.exe: test/tests.cpp
 	g++ $^ -o $@
 
-out/main.exe: src/main.cpp src/utility.cpp
+out/main.exe: src/main.cpp src/utility.cpp src/Logger.cpp
 	g++ $^ -o $@
 
 clean:

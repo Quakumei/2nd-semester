@@ -1,13 +1,12 @@
-#include <ostream>
 #include "utility.hpp"
-#include "BidirectionalList.hpp"
-#include "Dictionary.hpp"
+#include <ostream>
+#include "Logger.hpp"
 
 void tampio::print(const tampio::BidirectionalList< long >& d, const std::string& name, std::ostream& os)
 {
   if (d.empty())
   {
-    os << "<EMPTY>" << '\n';
+    Logger::log(os, Logger::Message::EMPTY);
     return;
   }
   os << name << ' ';

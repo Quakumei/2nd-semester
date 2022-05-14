@@ -1,9 +1,11 @@
 #include <cctype>
 #include <fstream>
 #include <iostream>
-#include "BidirectionalList.hpp"
-#include "Dictionary.hpp"
+#include "../common/Dictionary.hpp"
+#include "../common/ForwardList.hpp"
+#include "../common/BidirectionalList.hpp"
 #include "utility.hpp"
+#include "Logger.hpp"
 
 using namespace tampio;
 
@@ -182,7 +184,7 @@ int main(int argc, char *argv[])
             break;
           }
         }
-        std::cout << ((flag) ? "<TRUE>" : "<FALSE>") << '\n';
+        Logger::log(std::cout, (flag) ? Logger::Message::TRUE : Logger::Message::FALSE);
       }
       else if (!std::cin.eof())
       {
@@ -191,7 +193,7 @@ int main(int argc, char *argv[])
     }
     catch (const std::exception &e)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      Logger::log(std::cout, Logger::Message::INVALID_COMMAND);
     }
   }
 }

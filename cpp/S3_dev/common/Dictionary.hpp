@@ -6,6 +6,7 @@
 #include <utility>
 #include "BidirectionalList.hpp"
 #include "ForwardList.hpp"
+
 namespace tampio
 {
   template< class Key, class Value, class Compare = std::less< Key > >

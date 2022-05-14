@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 #include <utility>
+
 namespace tampio
 {
   template< class T >
