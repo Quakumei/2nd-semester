@@ -61,6 +61,10 @@ int main(int argc, char *argv[])
       while (line == "")
       {
         std::getline(std::cin, line);
+        if (std::cin.eof())
+        {
+          return 0;
+        }
       }
       if (line != "\0")
       {
@@ -140,7 +144,7 @@ int main(int argc, char *argv[])
       }
       else if (command == "concat")
       {
-        if (argcount < 2)
+        if (argcount < 3)
         {
           throw std::logic_error("bad argcount");
         }
