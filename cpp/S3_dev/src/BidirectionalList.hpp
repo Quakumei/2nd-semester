@@ -30,16 +30,9 @@ namespace tampio
     Iterator end();
     const Iterator begin() const;
     const Iterator end() const;
-
     Iterator beforeEnd();
     const Iterator beforeEnd() const;
-
     void print(std::ostream &) const;
-
-    // Iterator beforeBegin();
-    // const Iterator beforeBegin() const;
-
-    // const Iterator insertAfter(const Iterator &, const T &);
     const Iterator insertBefore(const Iterator &, const T &);
     void deleteNode(const Iterator &);
 
@@ -329,7 +322,6 @@ typename tampio::BidirectionalList< T >::Iterator tampio::BidirectionalList< T >
   }
   else if (n < 0)
   {
-    // TODO: change it if required
     throw std::logic_error("traversing back via number isn't implemented, use operator-- instead");
   }
   node_t *setnode;
@@ -366,21 +358,6 @@ typename tampio::BidirectionalList< T >::Iterator tampio::BidirectionalList< T >
 {
   return Iterator(tail_);
 }
-// XXX Not needed because of node* previous field;
-// template< class T >
-// typename tampio::BidirectionalList< T >::Iterator tampio::BidirectionalList< T >::beforeBegin()
-// {
-//   Iterator it;
-//   it.nextptr_ = head_;
-//   return it;
-// }
-// template< class T >
-// const typename tampio::BidirectionalList< T >::Iterator tampio::BidirectionalList< T >::beforeBegin() const
-// {
-//   Iterator it;
-//   it.nextptr_ = head_;
-//   return it;
-// }
 
 template< class T >
 const typename tampio::BidirectionalList< T >::Iterator tampio::BidirectionalList< T >::begin() const
@@ -398,28 +375,6 @@ const typename tampio::BidirectionalList< T >::Iterator tampio::BidirectionalLis
   return Iterator(tail_);
 }
 
-// XXX Use insertBefore instead
-// template< class T >
-// const typename tampio::BidirectionalList< T >::Iterator tampio::BidirectionalList< T >::insertAfter(const Iterator
-// &pos,
-//     const T &item)
-// {
-//   if (pos == beforeBegin())
-//   {
-//     pushFront(item);
-//     return begin();
-//   }
-//   else if (pos == beforeEnd())
-//   {
-//     pushBack(item);
-//     return end();
-//   }
-//   node_t *newNode = new node_t;
-//   newNode->next = pos.nextptr_;
-//   newNode->data = item;
-//   pos.nodeptr_->next = newNode;
-//   return pos;
-// }
 template< class T >
 const typename tampio::BidirectionalList< T >::Iterator
 tampio::BidirectionalList< T >::insertBefore(const Iterator &pos, const T &item)
@@ -441,37 +396,11 @@ tampio::BidirectionalList< T >::insertBefore(const Iterator &pos, const T &item)
   pos.nodeptr_->previous->next = newNode;
   pos.nodeptr_->previous = newNode;
 
-  // newNode->next = pos.nodeptr_;
-  // newNode->previous = pos.nodeptr_->previous;
-  // newNode->data = item;
-  // pos.nodeptr_->previous->next = newNode;
   return pos;
 }
 template< class T >
 void tampio::BidirectionalList< T >::deleteNode(const Iterator &pos)
 {
-  // TODO: Rework --> Test
-  // for (Iterator i = beforeBegin(); (i + 1) != end(); i++)
-  // {
-  //   if ((i + 1) == pos)
-  //   {
-  //     if (pos == begin())
-  //     {
-  //       deleteFront();
-  //       return;
-  //     }
-  //     if (pos == beforeEnd())
-  //     {
-  //       deleteBack();
-  //       return;
-  //     }
-  //     i.nodeptr_->next = i.nextptr_->next;
-  //     delete i.nextptr_;
-  //     return;
-  //   }
-  // }
-  // throw std::logic_error("No such node (deleteNode(Iterator))");
-
   if (pos == begin())
   {
     deleteFront();
@@ -482,18 +411,14 @@ void tampio::BidirectionalList< T >::deleteNode(const Iterator &pos)
     deleteBack();
     return;
   }
-
-  // std::cout << "CRINGE START";
   node_t *prev = pos.nodeptr_->previous;
   node_t *next = pos.nodeptr_->next;
   if (prev)
   {
-    // std::cout << "yes1";
     prev->next = next;
   }
   if (next)
   {
-    // std::cout << "yes2";
     next->previous = prev;
   }
   delete pos.nodeptr_;

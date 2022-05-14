@@ -3,18 +3,6 @@
 #include "BidirectionalList.hpp"
 #include "Dictionary.hpp"
 
-// void tampio::print(const tampio::Dict& d, const std::string& name, std::ostream& os)
-// {
-//   if (d.empty())
-//   {
-//     os << "<EMPTY>" << '\n';
-//     return;
-//   }
-//   os << name << ' ';
-//   d.print(os);
-//   os << '\n';
-//   return;
-// }
 void tampio::print(const tampio::BidirectionalList< long >& d, const std::string& name, std::ostream& os)
 {
   if (d.empty())

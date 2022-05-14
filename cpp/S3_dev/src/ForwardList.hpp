@@ -99,7 +99,6 @@ void tampio::ForwardList< T >::deleteBack()
     if (i.nextptr_ == temp)
     {
       beforeTemp = i.nodeptr_;
-      // // std::cout << "beforeTemp element: " << beforeTemp->data << '\n';
       beforeTemp->next = nullptr;
       break;
     }

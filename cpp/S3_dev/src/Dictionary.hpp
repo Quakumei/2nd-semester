@@ -95,7 +95,6 @@ void tampio::Dictionary< Key, Value, Compare >::push(const Key &key, const Value
   {
     if (cmp_(tempPair.first, it->first))
     {
-      // Possible SIGSEGV
       if (it + 1 != data_.end())
       {
         data_.insertBefore(it + 1, tempPair);
@@ -107,7 +106,6 @@ void tampio::Dictionary< Key, Value, Compare >::push(const Key &key, const Value
   {
     data_.pushBack(tempPair);
   }
-  // data_.insertBefore(it + 1, tempPair);
   return;
 }
 template< class Key, class Value, class Compare >

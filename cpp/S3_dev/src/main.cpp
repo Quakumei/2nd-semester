@@ -1,7 +1,6 @@
 #include <cctype>
 #include <fstream>
 #include <iostream>
-#include <limits>
 #include "BidirectionalList.hpp"
 #include "Dictionary.hpp"
 #include "utility.hpp"
@@ -56,20 +55,60 @@ int main(int argc, char *argv[])
   {
     try
     {
+      int argcount = -1;
+      ForwardList< std::string > commandLine;
+      std::string line = "";
+      while (line == "")
+      {
+        std::getline(std::cin, line);
+      }
+      if (line != "\0")
+      {
+        line += ' ';
+        std::string temp = "";
+        for (size_t i = 0; i < line.size(); i++)
+        {
+          if (line[i] == ' ')
+          {
+            commandLine.pushBack(temp);
+            argcount++;
+            temp = "";
+          }
+          else
+          {
+            temp += line[i];
+          }
+        }
+      }
 
       std::string command = "";
-      std::cin >> command;
+      command = commandLine.front();
+      commandLine.deleteFront();
       if (command == "print")
       {
+        if (argcount != 1)
+        {
+          throw std::logic_error("bad argcount");
+        }
         std::string name;
-        std::cin >> name;
+        name = commandLine.front();
+        commandLine.deleteFront();
         BidirectionalList< long > example = lists.get(name);
         print(example, name, std::cout);
       }
       else if (command == "replace")
       {
+        if (argcount != 3)
+        {
+          throw std::logic_error("bad argcount");
+        }
         std::string name, left, right;
-        std::cin >> name >> left >> right;
+        name = commandLine.front();
+        commandLine.deleteFront();
+        left = commandLine.front();
+        commandLine.deleteFront();
+        right = commandLine.front();
+        commandLine.deleteFront();
         if (std::isalpha(right[0]))
         {
           replace(lists.getRef(name), std::stoll(left), lists.get(right));
@@ -81,8 +120,15 @@ int main(int argc, char *argv[])
       }
       else if (command == "remove")
       {
+        if (argcount != 2)
+        {
+          throw std::logic_error("bad argcount");
+        }
         std::string name, left;
-        std::cin >> name >> left;
+        name = commandLine.front();
+        commandLine.deleteFront();
+        left = commandLine.front();
+        commandLine.deleteFront();
         if (std::isalpha(left[0]))
         {
           removeElems(lists.getRef(name), lists.get(left));
@@ -94,99 +140,46 @@ int main(int argc, char *argv[])
       }
       else if (command == "concat")
       {
-
+        if (argcount < 2)
+        {
+          throw std::logic_error("bad argcount");
+        }
         std::string name;
-        std::cin >> name;
+        name = commandLine.front();
+        commandLine.deleteFront();
         lists.push(name, BidirectionalList< long >());
 
-        std::string listName;
-        std::getline(std::cin, listName);
-        ForwardList< std::string > lexemes_s;
-        if (listName != "\0")
+        while (!commandLine.empty())
         {
-          listName += ' ';
-          std::string temp = "";
-          for (size_t i = 0; i < listName.size(); i++)
-          {
-            if (listName[i] == ' ')
-            {
-              lexemes_s.pushBack(temp);
-              temp = "";
-            }
-            else
-            {
-              temp += listName[i];
-            }
-          }
-        }
-
-        while (!lexemes_s.empty())
-        {
-          if (lexemes_s.front() == "")
-          {
-            lexemes_s.deleteFront();
-            continue;
-          }
-          // std::cout << "get:" << lexemes_s.front();
-          concat(lists.getRef(name), lists.get(lexemes_s.front()));
-          lexemes_s.deleteFront();
+          concat(lists.getRef(name), lists.get(commandLine.front()));
+          commandLine.deleteFront();
         }
       }
       else if (command == "equal")
       {
+        if (argcount < 2)
+        {
+          throw std::logic_error("bad argcount");
+        }
 
         std::string name;
-        std::cin >> name;
-        std::string listName;
-        std::getline(std::cin, listName);
-        ForwardList< std::string > lexemes_s;
-        if (listName != "\0")
-        {
-          listName += ' ';
-          std::string temp = "";
-          for (size_t i = 0; i < listName.size(); i++)
-          {
-            if (listName[i] == ' ')
-            {
-              lexemes_s.pushBack(temp);
-              temp = "";
-            }
-            else
-            {
-              temp += listName[i];
-            }
-          }
-        }
+        name = commandLine.front();
+        commandLine.deleteFront();
+
+        std::string other;
         bool flag = true;
-        while (!lexemes_s.empty())
+        while (!commandLine.empty())
         {
-          if (lexemes_s.front() == "")
-          {
-            lexemes_s.deleteFront();
-            continue;
-          }
-          if (!equal(lists.get(name), lists.get(lexemes_s.front())))
+          other = commandLine.front();
+          commandLine.deleteFront();
+          if (!equal(lists.getRef(name), lists.get(other)))
           {
             flag = false;
             break;
           }
-          lexemes_s.deleteFront();
         }
-        if (flag)
-        {
-          std::cout << "<TRUE>\n";
-        }
-        else
-        {
-          std::cout << "<FALSE>\n";
-        }
+        std::cout << ((flag) ? "<TRUE>" : "<FALSE>") << '\n';
       }
-      // else if (command == "union")
-      // {
-      //   std::string name, left, right;
-      //   std::cin >> name >> left >> right;
-      //   datasets.push(name, unionDict(datasets.get(left), datasets.get(right)));
-      // }
       else if (!std::cin.eof())
       {
         throw std::logic_error("unknown command");
@@ -195,9 +188,6 @@ int main(int argc, char *argv[])
     catch (const std::exception &e)
     {
       std::cout << "<INVALID COMMAND>\n";
-      std::cout << e.what();
-
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 }
