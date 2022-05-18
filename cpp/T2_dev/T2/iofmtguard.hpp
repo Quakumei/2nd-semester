@@ -8,7 +8,7 @@ namespace tampio
   class iofmtguard
   {
   public:
-    iofmtguard(std::basic_ios< char >& s);
+    explicit iofmtguard(std::basic_ios< char >& s);
     ~iofmtguard();
 
   private:
@@ -17,4 +17,5 @@ namespace tampio
     std::basic_ios< char >::fmtflags fmt_;
   };
 }
+
 #endif
